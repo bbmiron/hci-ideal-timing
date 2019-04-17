@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ideat - Scholarly HTML</title>
+    <link rel="stylesheet" href="css/scholarly.min.css">
+    <link rel="stylesheet" href="css/local.css">
+    <script src="js/refs.js"></script>
+    <script src="js/test.min.js"></script>
+  </head>
+  <body prefix="schema: http://schema.org">
+    <header>
+      <div class="banner">
+        <img src="scholarly-html.svg" width="227" height="50" alt="Scholarly HTML logo">
+        <div class="status">Community Draft</div>
+      </div>
+      <h1>Ideat (ideal timing)</h1>
+    </header>
+    <div role="contentinfo">
+      <dl>
+        <dt>Authors</dt>
+        <dd>
+          Bianca Miron,
+          Diana Elena Gusa,
+          Madalina Andreea Iacob
+        </dd>
+        <dt>License</dt>
+        <dd>
+          <a href="http://creativecommons.org/licenses/by/4.0/">CC-BY</a>
+        </dd>
+      </dl>
+    </div>
+    <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
+      <h2>Abstract</h2>
+      <p>
+        The current document was built as a documentation for the Ideal Timing project, which is intended for the Human-Computer Interaction university subject.
+      </p>
+    </section>
+    <section id="introduction" role="doc-introduction">
+      <h2>Introduction</h2>
+      <p>Develop a multi-device adaptive and customizable tool – i.e. a (mobile) Web browser extension – able to determine (e.g., learn) and recommend the ideal weekday and time for performing a set of desired actions in a specific context. For example, sending an important e-mail message to the co-workers, updating a Web site in order to increase the number of possible visitors and/or customers, committing the source-code only if a given module was not updated in the last W weeks, etc.</p>
+
+      <p>Based on the description above, we chose to build a mobile application which recommends this ideal time for some specific scenarios. These scenarios were found to be more occurent in our every day life and our scope is to help people in need in an efficient and simple manner.</p>
+    </section>
+    <section id="branding">
+      <h2>Branding</h2>
+
+      <section id="colors">
+        <h3>Colors</h3>
+
+        <p>A color is very important for a product's branding, being the first thing the user unconciously notices. We decided on the colors based on the <a role="doc-biblioref">Material Palette</a> which is perfect for a mobile app because as it can be seen below, it suggests other colors which are in harmony with the primary and the accent colors chosen by us. In the study of <a role="doc-biblioref">Color Psychology</a>, blue inspires trust, draws attention, suggests precision and stimulates productivity. These are the attributes we would like to be asocciated with, so that our users can find in IdeaT a quality, reliable and safe product. Popular technology brands such as Facebook, Twitter and Skype also use blue in their branding to make people want to use their software daily. The grey accent color associates with a timeless manner, because it is our job to help the people not be stressed by time anymore and leave that to us. Apple uses this as the main color to inspire elegance and practicability.</p>
+        <img class="pictures" src="material-palette.png">
+        <img class="pictures" src="android-material-palette.png">
+      </section>
+
+      <section id="fonts">
+        <h3>Fonts</h3>
+        <p>For Fonts, we used what <a role="doc-biblioref">Google Fonts</a> offered us and picked Roboto Condensed as our primary font. It is widely used in mobile and especially Android applications so the user is already familiar with it and this will make it much easier to convert to our app. It allows the letters to be settled into their natural width, with some friendly and rounded features, while its geometric feel focuses on the practical side. As suggested by Google, the Condensed family can be used alongside the normal Roboto family and the Roboto Slab family.</p>
+      </section>
+
+      <section id="logo">
+        <h3>Logo</h3>
+        <img src="logo.png">
+        <p>We thought of a simple, easy-to-remember logo but which makes the user grasp the concept of the app really fast. Its focus is on timing, finding the right moment when an action should be done to get the best results. The "I" letter in the middle is similar to the hand of a clock and we wanted to use the colors and fonts mentioned above.</p>
+      </section>
+    </section>
+
+    <section id="qoc">
+      <h2>QOC (Questions, Options, Criteria)</h2>
+        <img class="personas" src="qoc1.png">
+        <p></p>
+        <img class="personas" src="qoc2.png">
+        <p></p>
+        <img class="personas" src="qoc3.png">
+        <p></p>
+    </section>
+    <section id="ideas">
+      <h2>Ideas</h2>
+      <p>Our main ideas were based on the need of a Recruiter, which has difficulty in getting responses from employees and applications for a job. As the saying goes, "timing is everything", so an application which takes care of recommending the ideal time when a job description should be sent (for example, when as many people as possible are online) would help this kind of person a lot. The user only has to login in the desired platform, insert the text and accept the time suggested by the app. He/She can also edit the date and hour if needed. The app takes care of the rest.</p>
+
+      <p>The second idea is focused on the images, which nowadays are more easily spread through social medias if there is activity on it, such as liking, sharing, reacting and so on. Therefore, timing also is very important in this case for advertisement. Continuing with our story, if our Recruiter decides to change the cover or profile picture, it needs to be at a favourable time when most users are online. This feature is also very useful for people who use social medias very often and also whose job depends on how many viewers or fans they have, hence the secondary persona we identified - the Influencer type.</p>
+
+      <p>The third idea is a frequent problem especially in our IT workplaces. A lot of emails the employees receive are not being read because of various reasons: they are away for lunch break, in a very important meeting with the customer, in a passionate discussion with their colleagues, working on some story which needs a lot of concentration and so on. Our Recruiter has the complex task of finding the right time for everyone so at least some of the receivers are in the mood of replying to the email. By automating this, he/she can focus on the work she was actually trained to do and studied for and leave the calculus in the hands of our application.</p>
+
+      <p>While deciding on a design for the Android application, we used mobile design patterns such as: 
+        <ol>
+          <li>Calendar - to choose the best day, month and year when the action should be sent</li>
+          <li>Empty states - for the History tab to encourage the user to add some actions</li>
+          <li>Notifications - to help the user stay in sync and notify efficiently when the action was completed</li>
+          <li>Pickers - in case there is the need to edit the day or the hour of the task</li> 
+          <li>Lists - the history list or the suggestions list when trying to input something</li> 
+          <li>Preferences - the screen for the profile of the user, to save general settings for the app</li>
+        </ol>
+      </p>
+      
+      <section id="sketches">
+        <h3>Sketches</h3>
+        <img class="personas" src="sketch1.jpg">
+        <img class="personas" src="sketch2.png">
+        <img class="personas" src="sketch3.png">
+      </section>
+
+      <section id="wireframes">
+        <h3>Wireframes</h3>
+        <img class="wireframes" src="wireframe1.png">
+        <img class="wireframes" src="wireframe2.png">
+        <img class="wireframes" src="wireframe3.png">
+        <img class="wireframes" src="wireframe4.png">
+        <img class="wireframes" src="wireframe5.png">
+        <img class="wireframes" src="wireframe6.png">
+        <img class="wireframes" src="wireframe7.png">
+        <img class="wireframes" src="wireframe8.png">
+      </section>
+
+      <section id="storyboards">
+        <h3>Storyboards</h3>
+        <img class="personas" src="storyboard1.png">
+        <img class="personas" src="storyboard2.png">
+        <img class="personas" src="storyboard3.png">
+      </section>
+
+      <section id="prototypes">
+        <h3>Prototypes</h3>
+        Because a mobile application is better to be seen in motion, in order to understand the flow better we built a prototype using Proto.io. It can be found <span><a href="https://pr.to/AP6B7A/">here</a>, but since the trial version was for 15 days, it might not be available for a very long time.
+      </section>
+    </section>
+
+    <section id="personas">
+      <h2>Personas</h2>
+
+      <section id="primary">
+        <h3>Primary</h3>
+      </section>
+
+      <section id="secondary">
+        <h3>Secondary</h3>
+      </section>
+
+      <section id="served">
+        <h3>Served</h3>
+        <img class="personas" src="persona-served.png">
+      </section>
+
+      <section id="negative">
+        <h3>Negative</h3>
+        <img class="personas" src="persona-negative.png">
+      </section>
+
+    </section>
+  </body>
+</html>
