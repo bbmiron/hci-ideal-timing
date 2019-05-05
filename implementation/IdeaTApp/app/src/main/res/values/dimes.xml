@@ -3,7 +3,9 @@
     <dimen name="normal_margin">16dp</dimen>
     <dimen name="small_margin">8dp</dimen>
     <dimen name="big_margin">32dp</dimen>
+    <dimen name="xxl_margin">64dp</dimen>
     <dimen name="corners">16dp</dimen>
+    <dimen name="profile_image_width">64dp</dimen>
     <dimen name="logo_width">164dp</dimen>
     <dimen name="logo_height">198dp</dimen>
     <dimen name="login_button_height">48dp</dimen>

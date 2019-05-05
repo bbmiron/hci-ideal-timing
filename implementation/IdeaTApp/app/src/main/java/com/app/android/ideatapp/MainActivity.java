@@ -11,9 +11,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.android.ideatapp.home.activities.HomeScreenActivity;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -21,9 +22,10 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Arrays;
 
-    private TextView info;
+public class MainActivity extends AppCompatActivity {
+    public static AccessToken ACCESS_TOKEN = null;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
 
@@ -33,23 +35,23 @@ public class MainActivity extends AppCompatActivity {
         initFacebookSdk();
         setContentView(R.layout.activity_main);
         customizeLogo();
-        info = findViewById(R.id.info);
         loginButton = findViewById(R.id.login_button);
-
+        loginButton.setReadPermissions(Arrays.asList( "public_profile", "email", "user_birthday", "user_friends"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(final LoginResult loginResult) {
+                ACCESS_TOKEN = loginResult.getAccessToken();
                 handleSuccessfulLogin();
             }
 
             @Override
             public void onCancel() {
-                info.setText("Login attempt canceled.");
+                Toast.makeText(MainActivity.this, "Login attempt canceled.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException e) {
-                info.setText(R.string.login_error);
+                Toast.makeText(MainActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -5,4 +5,7 @@
     <string name="write_post_button">Write a post</string>
     <string name="upload_photo_button">Upload a photo</string>
     <string name="send_email_button">Send an email</string>
+    <string name="error_occurred_try_again">Parsing Json error!</string>
+    <string name="write_post_hint">Write something...</string>
+    <string name="action_save">Save</string>
 </resources>

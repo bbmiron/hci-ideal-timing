@@ -32,6 +32,14 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity"/>
 
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:authorities="com.facebook.app.FacebookContentProvider2336462966589576"
+            android:exported="true" />
+
+        <activity android:name=".WritePostActivity"/>
+
     </application>
 
 </manifest>
