@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">IdeaTApp</string>
+    <string name="facebook_app_id">2336462966589576</string>
+    <string name="login_error">Login attempt failed.</string>
+    <string name="write_post_button">Write a post</string>
+    <string name="upload_photo_button">Upload a photo</string>
+    <string name="send_email_button">Send an email</string>
 </resources>
