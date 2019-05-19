@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment {
         });
 
         final String email = this.getArguments().getString(MainActivity.EMAIL_TAG);
+        final String name = this.getArguments().getString(MainActivity.NAME_TAG);
 
         sendEmailButton = layoutInflater.findViewById(R.id.send_email_button);
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +55,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), SendEmailActivity.class);
                 intent.putExtra(MainActivity.EMAIL_TAG, email);
+                intent.putExtra(MainActivity.NAME_TAG, name);
                 startActivity(intent);
             }
         });
