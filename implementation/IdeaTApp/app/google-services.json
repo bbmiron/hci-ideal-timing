@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "714060525741",
+    "firebase_url": "https://ideat-241108.firebaseio.com",
+    "project_id": "ideat-241108",
+    "storage_bucket": "ideat-241108.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714060525741:android:6236ef43ea9c6eaf",
+        "android_client_info": {
+          "package_name": "com.app.android.ideatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714060525741-u7td861k44uh0aflrafbbqm1prd4fkjd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.android.ideatapp",
+            "certificate_hash": "b6ff94c6d08cc1ff796f82242b0482b5b0bd7bd3"
+          }
+        },
+        {
+          "client_id": "714060525741-cltu530bki95ijrdv7b0bp7tp66hb07m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDSu5m3QSWNkVSWlVnxoXgBC64z8NUn4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "714060525741-cltu530bki95ijrdv7b0bp7tp66hb07m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

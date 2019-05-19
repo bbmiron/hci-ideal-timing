@@ -42,7 +42,7 @@
             android:layout_margin="@dimen/small_margin"
             android:background="@drawable/draw_gray_button"
             android:padding="@dimen/normal_margin"
-            android:text="@string/upload_photo_button"
+            android:text="@string/send_email_button"
             android:textSize="@dimen/text_18sp" />
     </LinearLayout>
 

@@ -8,8 +8,11 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,13 +24,28 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+
+    private static final int GOOGLE_LOGIN_REQ_CODE = 1000;
+    public static final String NAME_TAG = "name";
+    public static final String EMAIL_TAG = "email";
+    public static final String PHOTO_TAG = "photo";
+
     public static AccessToken ACCESS_TOKEN = null;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
+    private SignInButton googleSigninButton;
+    private GoogleApiClient googleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +53,24 @@ public class MainActivity extends AppCompatActivity {
         initFacebookSdk();
         setContentView(R.layout.activity_main);
         customizeLogo();
+        googleSigninButton = findViewById(R.id.google_sign_button);
+        googleSigninButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                googleSignin();
+            }
+        });
+
+        GoogleSignInOptions  googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                .build();
+
+
+
         loginButton = findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList( "public_profile", "email", "user_birthday", "user_friends"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -57,9 +93,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void googleSignin() {
+        Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        startActivityForResult(intent, GOOGLE_LOGIN_REQ_CODE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GOOGLE_LOGIN_REQ_CODE) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleResult(result);
+        }
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void handleResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            Intent intent = new Intent(this, HomeScreenActivity.class);
+            GoogleSignInAccount account = result.getSignInAccount();
+            String name = account.getDisplayName();
+            String email = account.getEmail();
+            intent.putExtra(NAME_TAG, name);
+            intent.putExtra(EMAIL_TAG, email);
+            startActivity(intent);
+        }
     }
 
     private void initFacebookSdk() {
@@ -81,5 +139,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void handleSuccessfulLogin() {
         startActivity(new Intent(this, HomeScreenActivity.class));
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

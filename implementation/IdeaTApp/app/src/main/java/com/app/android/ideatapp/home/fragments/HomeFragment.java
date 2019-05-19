@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.app.android.ideatapp.MainActivity;
 import com.app.android.ideatapp.R;
+import com.app.android.ideatapp.SendEmailActivity;
 import com.app.android.ideatapp.WritePostActivity;
 
 public class HomeFragment extends Fragment {
@@ -43,5 +45,18 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(getContext(), WritePostActivity.class));
             }
         });
+
+        final String email = this.getArguments().getString(MainActivity.EMAIL_TAG);
+
+        sendEmailButton = layoutInflater.findViewById(R.id.send_email_button);
+        sendEmailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), SendEmailActivity.class);
+                intent.putExtra(MainActivity.EMAIL_TAG, email);
+                startActivity(intent);
+            }
+        });
+
     }
 }

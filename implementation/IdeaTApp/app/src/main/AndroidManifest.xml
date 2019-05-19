@@ -39,6 +39,7 @@
             android:exported="true" />
 
         <activity android:name=".WritePostActivity"/>
+        <activity android:name=".SendEmailActivity"/>
 
     </application>
 
