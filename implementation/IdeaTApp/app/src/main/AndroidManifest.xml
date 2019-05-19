@@ -44,6 +44,7 @@
 
         <activity android:name=".WritePostActivity"/>
         <activity android:name=".SendEmailActivity"/>
+        <activity android:name=".home.activities.RecommendedTimeScreen"/>
 
     </application>
 

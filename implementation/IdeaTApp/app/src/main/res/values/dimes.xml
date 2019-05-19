@@ -6,6 +6,7 @@
     <dimen name="xxl_margin">64dp</dimen>
     <dimen name="corners">16dp</dimen>
     <dimen name="profile_image_width">64dp</dimen>
+    <dimen name="buttons_width">32dp</dimen>
     <dimen name="logo_width">164dp</dimen>
     <dimen name="logo_height">198dp</dimen>
     <dimen name="login_button_height">48dp</dimen>

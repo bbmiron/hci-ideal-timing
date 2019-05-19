@@ -8,4 +8,8 @@
     <string name="error_occurred_try_again">Parsing Json error!</string>
     <string name="write_post_hint">Write something...</string>
     <string name="action_save">Save</string>
+    <string name="edit_date">Edit date</string>
+    <string name="edit_time">Edit time</string>
+    <string name="ok">Ok</string>
+    <string name="recommended_title">Recommended Date and Time</string>
 </resources>

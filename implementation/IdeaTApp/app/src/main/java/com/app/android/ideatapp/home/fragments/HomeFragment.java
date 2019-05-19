@@ -14,6 +14,7 @@ import com.app.android.ideatapp.MainActivity;
 import com.app.android.ideatapp.R;
 import com.app.android.ideatapp.SendEmailActivity;
 import com.app.android.ideatapp.WritePostActivity;
+import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
 
 public class HomeFragment extends Fragment {
 
@@ -57,6 +58,14 @@ public class HomeFragment extends Fragment {
                 intent.putExtra(MainActivity.EMAIL_TAG, email);
                 intent.putExtra(MainActivity.NAME_TAG, name);
                 startActivity(intent);
+            }
+        });
+
+        uploadPhotoButton = layoutInflater.findViewById(R.id.upload_photo_button);
+        uploadPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), RecommendedTimeScreen.class));
             }
         });
 

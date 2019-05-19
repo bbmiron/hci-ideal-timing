@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/recommended_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin"
+        android:padding="@dimen/big_margin"
+        android:text="@string/recommended_title"
+        android:textSize="@dimen/text_18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/calendar_logo"
+        android:layout_width="106dp"
+        android:layout_height="106dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_date_range_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recommended_title" />
+
+    <TextView
+        android:id="@+id/recommended_date"
+        android:layout_width="126dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin"
+        android:textSize="@dimen/text_18sp"
+        app:layout_constraintEnd_toStartOf="@+id/edit_date"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calendar_logo"
+        android:text="17/04/2019 " />
+
+    <Button
+        android:id="@+id/edit_date"
+        android:layout_width="@dimen/buttons_width"
+        android:layout_height="@dimen/buttons_width"
+        android:layout_margin="@dimen/big_margin"
+        android:background="@drawable/ic_edit_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/recommended_date"
+        app:layout_constraintTop_toBottomOf="@id/calendar_logo" />
+
+    <TextView
+        android:id="@+id/recommended_time"
+        android:layout_width="126dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin"
+        android:textSize="@dimen/text_18sp"
+        app:layout_constraintEnd_toStartOf="@+id/edit_time"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recommended_date"
+        android:text="09:00" />
+
+    <Button
+        android:id="@+id/edit_time"
+        android:layout_width="@dimen/buttons_width"
+        android:layout_height="@dimen/buttons_width"
+        android:layout_margin="@dimen/big_margin"
+        android:background="@drawable/ic_edit_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/recommended_time"
+        app:layout_constraintTop_toBottomOf="@id/edit_date" />
+
+
+    <Button
+        android:id="@+id/ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_margin"
+        android:background="@drawable/draw_gray_button"
+        android:text="@string/ok"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toBottomOf="@+id/edit_time"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>
