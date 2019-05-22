@@ -17,7 +17,7 @@ import com.app.android.ideatapp.WritePostActivity;
 import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
 
 public class HomeFragment extends Fragment {
-
+    public static final int SEND_EMAIL_REQ_CODE = 10001;
     private Button writePostButton;
     private Button uploadPhotoButton;
     private Button sendEmailButton;
@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), SendEmailActivity.class);
                 intent.putExtra(MainActivity.EMAIL_TAG, email);
                 intent.putExtra(MainActivity.NAME_TAG, name);
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, SEND_EMAIL_REQ_CODE);
             }
         });
 

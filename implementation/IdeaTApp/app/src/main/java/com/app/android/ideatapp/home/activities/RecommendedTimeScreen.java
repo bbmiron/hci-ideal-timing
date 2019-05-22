@@ -2,6 +2,7 @@ package com.app.android.ideatapp.home.activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,8 @@ import java.util.Calendar;
 
 public class RecommendedTimeScreen extends AppCompatActivity {
 
+    public static final String DATE = "date";
+    public static final String TIME = "time";
     private TextView recommendedDate;
     private TextView recommendedTime;
     private Button editDateButton;
@@ -41,6 +44,17 @@ public class RecommendedTimeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openTimePicker();
+            }
+        });
+
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(DATE, recommendedDate.getText());
+                resultIntent.putExtra(TIME, recommendedTime.getText());
+                setResult(RESULT_OK, resultIntent);
+                finish();
             }
         });
     }

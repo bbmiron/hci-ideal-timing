@@ -2,6 +2,7 @@ package com.app.android.ideatapp;
 
 import android.Manifest;
 import android.accounts.AccountManager;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -26,6 +27,8 @@ import android.widget.EditText;
 
 import com.app.android.ideatapp.helpers.InternetDetector;
 import com.app.android.ideatapp.helpers.Utils;
+import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
+import com.app.android.ideatapp.home.models.ItemModel;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -43,6 +46,7 @@ import com.google.api.services.gmail.model.Message;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -60,11 +64,14 @@ import javax.mail.internet.MimeMultipart;
 
 public class SendEmailActivity extends AppCompatActivity {
 
+    public static final String MODEL = "model";
+    public static final int REC_REQ_CODE = 10002;
     private EditText from;
     EditText edtToAddress, edtSubject, edtMessage, edtAttachmentData;
     private FloatingActionButton sendFabButton;
     private Button browse;
     private String email;
+    private ItemModel model;
 
     GoogleAccountCredential mCredential;
     ProgressDialog mProgress;
@@ -104,10 +111,15 @@ public class SendEmailActivity extends AppCompatActivity {
         sendFabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getResultsFromApi(view);
+                openRecommendedScreen();
+//                getResultsFromApi(view);
             }
         });
 
+    }
+
+    private void openRecommendedScreen() {
+        startActivityForResult(new Intent(this, RecommendedTimeScreen.class), REC_REQ_CODE);
     }
 
     private void init() {
@@ -251,6 +263,16 @@ public class SendEmailActivity extends AppCompatActivity {
                     final Uri imageUri = data.getData();
                     fileName = getPathFromURI(imageUri);
                     edtAttachmentData.setText(fileName);
+                }
+            case REC_REQ_CODE:
+                if (resultCode == RESULT_OK) {
+                    String date = data.getStringExtra(RecommendedTimeScreen.DATE);
+                    String time = data.getStringExtra(RecommendedTimeScreen.TIME);
+                    model = new ItemModel(edtSubject.getText().toString(), edtSubject.getText().toString(), date, time);
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(MODEL, model);
+                    setResult(RESULT_OK, resultIntent);
+                    this.finish();
                 }
         }
     }
