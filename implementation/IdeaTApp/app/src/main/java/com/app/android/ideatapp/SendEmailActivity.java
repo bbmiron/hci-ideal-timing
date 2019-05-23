@@ -2,19 +2,28 @@ package com.app.android.ideatapp;
 
 import android.Manifest;
 import android.accounts.AccountManager;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.job.JobInfo;
+import android.app.job.JobParameters;
+import android.app.job.JobScheduler;
+import android.app.job.JobService;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -24,11 +33,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.app.android.ideatapp.helpers.InternetDetector;
 import com.app.android.ideatapp.helpers.Utils;
 import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
 import com.app.android.ideatapp.home.models.ItemModel;
+import com.app.android.ideatapp.jobs.SendEmailJobService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -46,7 +57,6 @@ import com.google.api.services.gmail.model.Message;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -66,12 +76,15 @@ public class SendEmailActivity extends AppCompatActivity {
 
     public static final String MODEL = "model";
     public static final int REC_REQ_CODE = 10002;
+    public static final int JOB_ID = 100;
     private EditText from;
     EditText edtToAddress, edtSubject, edtMessage, edtAttachmentData;
     private FloatingActionButton sendFabButton;
     private Button browse;
     private String email;
     private ItemModel model;
+    private View viewSend;
+    public static SendEmailActivity instance;
 
     GoogleAccountCredential mCredential;
     ProgressDialog mProgress;
@@ -93,6 +106,7 @@ public class SendEmailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send_email_activity);
         init();
+        instance = this;
 
         browse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,13 +123,47 @@ public class SendEmailActivity extends AppCompatActivity {
         });
 
         sendFabButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                openRecommendedScreen();
+                viewSend = view;
+                scheduleJob();
+//                openRecommendedScreen();
 //                getResultsFromApi(view);
             }
         });
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void scheduleJob() {
+        ComponentName componentName = new ComponentName(this, SendEmailJobService.class);
+        PersistableBundle bundle = new PersistableBundle();
+        bundle.putString(RecommendedTimeScreen.DATE, "23-05-19");
+        bundle.putString(RecommendedTimeScreen.TIME, "11:47");
+        JobInfo jobInfo = new JobInfo.Builder(JOB_ID, componentName)
+                .setRequiresCharging(true)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPeriodic(10000)
+                .setPersisted(true)
+                .setExtras(bundle)
+                .build();
+
+        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = jobScheduler.schedule(jobInfo);
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d("tag", "Job scheduled!");
+        } else {
+            Log.d("tag", "Job not scheduled");
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void cancelJob(View view) {
+        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+        jobScheduler.cancel(JOB_ID);
+        Log.d("tag","job cancelled");
     }
 
     private void openRecommendedScreen() {
@@ -153,19 +201,19 @@ public class SendEmailActivity extends AppCompatActivity {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
     }
 
-    private void getResultsFromApi(View view) {
+    public void getResultsFromApi() {
         if (!isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
         } else if (mCredential.getSelectedAccountName() == null) {
-            chooseAccount(view);
+            chooseAccount(viewSend);
         } else if (!internetDetector.checkMobileInternetConn()) {
-            showMessage(view, "No network connection available.");
+            showMessage(viewSend, "No network connection available.");
         } else if (!Utils.isNotEmpty(edtToAddress)) {
-            showMessage(view, "To address Required");
+            showMessage(viewSend, "To address Required");
         } else if (!Utils.isNotEmpty(edtSubject)) {
-            showMessage(view, "Subject Required");
+            showMessage(viewSend, "Subject Required");
         } else if (!Utils.isNotEmpty(edtMessage)) {
-            showMessage(view, "Message Required");
+            showMessage(viewSend, "Message Required");
         } else {
             new MakeRequestTask(this, mCredential).execute();
         }
@@ -203,7 +251,7 @@ public class SendEmailActivity extends AppCompatActivity {
             String accountName = getPreferences(Context.MODE_PRIVATE).getString(PREF_ACCOUNT_NAME, null);
             if (accountName != null) {
                 mCredential.setSelectedAccountName(accountName);
-                getResultsFromApi(view);
+                getResultsFromApi();
             } else {
                 // Start a dialog from which the user can choose an account
                 startActivityForResult(mCredential.newChooseAccountIntent(), Utils.REQUEST_ACCOUNT_PICKER);
@@ -237,7 +285,8 @@ public class SendEmailActivity extends AppCompatActivity {
                     showMessage(sendFabButton, "This app requires Google Play Services. Please install " +
                             "Google Play Services on your device and relaunch this app.");
                 } else {
-                    getResultsFromApi(sendFabButton);
+                    viewSend = sendFabButton;
+                    getResultsFromApi();
                 }
                 break;
             case Utils.REQUEST_ACCOUNT_PICKER:
@@ -249,13 +298,15 @@ public class SendEmailActivity extends AppCompatActivity {
                         editor.putString(PREF_ACCOUNT_NAME, accountName);
                         editor.apply();
                         mCredential.setSelectedAccountName(accountName);
-                        getResultsFromApi(sendFabButton);
+                        viewSend = sendFabButton;
+                        getResultsFromApi();
                     }
                 }
                 break;
             case Utils.REQUEST_AUTHORIZATION:
                 if (resultCode == RESULT_OK) {
-                    getResultsFromApi(sendFabButton);
+                    viewSend = sendFabButton;
+                    getResultsFromApi();
                 }
                 break;
             case SELECT_PHOTO:
@@ -410,6 +461,7 @@ public class SendEmailActivity extends AppCompatActivity {
             mProgress.show();
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         protected void onPostExecute(String output) {
             mProgress.hide();
@@ -417,6 +469,7 @@ public class SendEmailActivity extends AppCompatActivity {
                 showMessage(view, "No results returned.");
             } else {
                 showMessage(view, output);
+                cancelJob(view);
             }
         }
 
