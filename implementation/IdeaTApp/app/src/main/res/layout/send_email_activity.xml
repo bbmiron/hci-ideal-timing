@@ -6,7 +6,6 @@
     android:padding="@dimen/normal_margin"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
-    android:background="@color/colorPrimary"
     android:orientation="vertical" >
     <EditText
         android:id="@+id/from"
