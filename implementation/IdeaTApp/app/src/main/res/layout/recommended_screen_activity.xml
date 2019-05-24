@@ -11,7 +11,6 @@
         android:id="@+id/recommended_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/big_margin"
         android:padding="@dimen/big_margin"
         android:text="@string/recommended_title"
         android:textSize="@dimen/text_18sp"
@@ -22,8 +21,8 @@
 
     <ImageView
         android:id="@+id/calendar_logo"
-        android:layout_width="106dp"
-        android:layout_height="106dp"
+        android:layout_width="98dp"
+        android:layout_height="98dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_date_range_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,33 +30,47 @@
         app:layout_constraintTop_toBottomOf="@id/recommended_title" />
 
     <TextView
+        android:id="@+id/recommended_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/normal_margin"
+        android:paddingLeft="@dimen/normal_margin"
+        android:paddingRight="@dimen/normal_margin"
+        android:gravity="center"
+        android:textSize="@dimen/text_18sp"
+        app:layout_constraintTop_toBottomOf="@id/calendar_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/recommended_subtitle"/>
+
+    <TextView
         android:id="@+id/recommended_date"
         android:layout_width="126dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/big_margin"
+        android:layout_margin="@dimen/normal_margin"
         android:textSize="@dimen/text_18sp"
         app:layout_constraintEnd_toStartOf="@+id/edit_date"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calendar_logo"
+        app:layout_constraintTop_toBottomOf="@id/recommended_subtitle"
         android:text="17/04/2019 " />
 
     <Button
         android:id="@+id/edit_date"
         android:layout_width="@dimen/buttons_width"
         android:layout_height="@dimen/buttons_width"
-        android:layout_margin="@dimen/big_margin"
+        android:layout_margin="@dimen/normal_margin"
         android:background="@drawable/ic_edit_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/recommended_date"
-        app:layout_constraintTop_toBottomOf="@id/calendar_logo" />
+        app:layout_constraintTop_toBottomOf="@id/recommended_subtitle" />
 
     <TextView
         android:id="@+id/recommended_time"
         android:layout_width="126dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/big_margin"
+        android:layout_margin="@dimen/normal_margin"
         android:textSize="@dimen/text_18sp"
         app:layout_constraintEnd_toStartOf="@+id/edit_time"
         app:layout_constraintHorizontal_bias="0.5"
@@ -69,7 +82,7 @@
         android:id="@+id/edit_time"
         android:layout_width="@dimen/buttons_width"
         android:layout_height="@dimen/buttons_width"
-        android:layout_margin="@dimen/big_margin"
+        android:layout_margin="@dimen/normal_margin"
         android:background="@drawable/ic_edit_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -77,16 +90,28 @@
         app:layout_constraintTop_toBottomOf="@id/edit_date" />
 
 
+
+    <TextView
+        android:id="@+id/footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/recommended_time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/big_margin"
+        android:textSize="@dimen/text_18sp"
+        android:gravity="center"
+        android:padding="@dimen/normal_margin"
+        android:text="@string/footer"/>
     <Button
         android:id="@+id/ok_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/big_margin"
         android:background="@drawable/draw_gray_button"
-        android:text="@string/ok"
+        android:text="@string/schedule_button"
+        app:layout_constraintTop_toBottomOf="@id/footer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toBottomOf="@+id/edit_time"
         app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

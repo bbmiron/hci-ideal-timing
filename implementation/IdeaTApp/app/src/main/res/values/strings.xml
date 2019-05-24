@@ -10,6 +10,8 @@
     <string name="action_save">Save</string>
     <string name="edit_date">Edit date</string>
     <string name="edit_time">Edit time</string>
-    <string name="ok">Ok</string>
+    <string name="schedule_button">Schedule</string>
     <string name="recommended_title">Recommended Date and Time</string>
+    <string name="recommended_subtitle">Accordingly your google calendar, the recommended time for sending this email is:\n</string>
+    <string name="footer">You can schedule the email or edit the date and time</string>
 </resources>
