@@ -76,7 +76,6 @@ public class SendEmailActivity extends AppCompatActivity {
 
     public static final String MODEL = "model";
     public static final int REC_REQ_CODE = 10002;
-    public static final int JOB_ID = 100;
     private EditText from;
     EditText edtToAddress, edtSubject, edtMessage, edtAttachmentData;
     private FloatingActionButton sendFabButton;
@@ -127,43 +126,11 @@ public class SendEmailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 viewSend = view;
-                scheduleJob();
-//                openRecommendedScreen();
+                openRecommendedScreen();
 //                getResultsFromApi(view);
             }
         });
 
-    }
-
-    @TargetApi(Build.VERSION_CODES.N)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void scheduleJob() {
-        ComponentName componentName = new ComponentName(this, SendEmailJobService.class);
-        PersistableBundle bundle = new PersistableBundle();
-        bundle.putString(RecommendedTimeScreen.DATE, "23-05-19");
-        bundle.putString(RecommendedTimeScreen.TIME, "11:47");
-        JobInfo jobInfo = new JobInfo.Builder(JOB_ID, componentName)
-                .setRequiresCharging(true)
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .setPeriodic(10000)
-                .setPersisted(true)
-                .setExtras(bundle)
-                .build();
-
-        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
-        int resultCode = jobScheduler.schedule(jobInfo);
-        if (resultCode == JobScheduler.RESULT_SUCCESS) {
-            Log.d("tag", "Job scheduled!");
-        } else {
-            Log.d("tag", "Job not scheduled");
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void cancelJob(View view) {
-        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
-        jobScheduler.cancel(JOB_ID);
-        Log.d("tag","job cancelled");
     }
 
     private void openRecommendedScreen() {
@@ -181,8 +148,8 @@ public class SendEmailActivity extends AppCompatActivity {
                 .setBackOff(new ExponentialBackOff());
 
         // Initializing Progress Dialog
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Sending...");
+//        mProgress = new ProgressDialog(this);
+//        mProgress.setMessage("Sending...");
 
         from = findViewById(R.id.from);
         sendFabButton =  findViewById(R.id.send_button);
@@ -458,24 +425,24 @@ public class SendEmailActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            mProgress.show();
+//            mProgress.show();
         }
 
         @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         protected void onPostExecute(String output) {
-            mProgress.hide();
+//            mProgress.hide();
             if (output == null || output.length() == 0) {
                 showMessage(view, "No results returned.");
             } else {
                 showMessage(view, output);
-                cancelJob(view);
+                cancelJob();
             }
         }
 
         @Override
         protected void onCancelled() {
-            mProgress.hide();
+//            mProgress.hide();
             if (mLastError != null) {
                 if (mLastError instanceof GooglePlayServicesAvailabilityIOException) {
                     showGooglePlayServicesAvailabilityErrorDialog(
@@ -493,5 +460,11 @@ public class SendEmailActivity extends AppCompatActivity {
                 showMessage(view, "Request Cancelled.");
             }
         }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void cancelJob() {
+        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+        jobScheduler.cancel(RecommendedTimeScreen.JOB_ID);
+        Log.d("tag","job cancelled");
     }
 }

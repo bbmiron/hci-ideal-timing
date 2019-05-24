@@ -6,14 +6,11 @@ import android.app.job.JobService;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
-import android.widget.ThemedSpinnerAdapter;
-import android.widget.Toast;
 
 import com.app.android.ideatapp.SendEmailActivity;
 import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -21,30 +18,23 @@ import java.util.Locale;
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class SendEmailJobService extends JobService {
 
-    private boolean jobCancellend = false;
+    private static final String DATE_FORMAT = "dd-M-yyyy";
+    private static final String TIME_FORMAT = "HH:mm";
+    private boolean jobCancelled = false;
     @Override
     public boolean onStartJob(final JobParameters params) {
         Log.d("tag", "onStartJob JobId: " + params.getJobId());
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String currentDate = new SimpleDateFormat("dd-MM-yy", Locale.getDefault()).format(new Date());
-                String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+        String currentDate = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(new Date());
+        String currentTime = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault()).format(new Date());
 
 
-                String date = params.getExtras().getString(RecommendedTimeScreen.DATE);
-                String time = params.getExtras().getString(RecommendedTimeScreen.TIME);
+        String time = params.getExtras().getString(RecommendedTimeScreen.TIME);
+        String date = params.getExtras().getString(RecommendedTimeScreen.DATE);
 
-//                if (currentDate.equals(date) && currentTime.equals(time)) {
-                    sendEmail();
-                    jobFinished(params, true);
-//                } else {
-//
-//                }
-            }
-        }).start();
-
+        if (currentDate.equals(date) && currentTime.equals(time)) {
+            sendEmail();
+            jobFinished(params, false);
+        }
         return false;
     }
 
@@ -54,7 +44,7 @@ public class SendEmailJobService extends JobService {
         if (sendEmailActivity != null) {
             sendEmailActivity.getResultsFromApi();
         }
-        if (jobCancellend) {
+        if (jobCancelled) {
             return;
         }
     }
@@ -62,7 +52,7 @@ public class SendEmailJobService extends JobService {
     @Override
     public boolean onStopJob(JobParameters params) {
         Log.d("tag", "Job cancelled before completion");
-        jobCancellend = true;
+        jobCancelled = true;
         return true;
     }
 }
