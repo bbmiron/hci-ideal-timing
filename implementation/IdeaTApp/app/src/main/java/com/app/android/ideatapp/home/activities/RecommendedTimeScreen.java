@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -70,7 +69,6 @@ public class RecommendedTimeScreen extends AppCompatActivity {
         });
 
         scheduleButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 if (activityOpened != 0 || activityOpened != 1) {
@@ -86,7 +84,6 @@ public class RecommendedTimeScreen extends AppCompatActivity {
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void scheduleJob() {
         ComponentName componentName = new ComponentName(this, SendEmailJobService.class);
         PersistableBundle bundle = new PersistableBundle();

@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.app.android.ideatapp.SendEmailActivity;
@@ -15,7 +14,6 @@ import java.util.Date;
 import java.util.Locale;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class SendEmailJobService extends JobService {
 
     private static final String DATE_FORMAT = "dd-M-yyyy";

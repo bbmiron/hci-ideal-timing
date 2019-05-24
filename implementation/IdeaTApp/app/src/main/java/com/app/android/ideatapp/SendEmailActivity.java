@@ -23,7 +23,6 @@ import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -122,7 +121,6 @@ public class SendEmailActivity extends AppCompatActivity {
         });
 
         sendFabButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 viewSend = view;
@@ -282,6 +280,7 @@ public class SendEmailActivity extends AppCompatActivity {
                     fileName = getPathFromURI(imageUri);
                     edtAttachmentData.setText(fileName);
                 }
+                break;
             case REC_REQ_CODE:
                 if (resultCode == RESULT_OK) {
                     String date = data.getStringExtra(RecommendedTimeScreen.DATE);
@@ -292,6 +291,7 @@ public class SendEmailActivity extends AppCompatActivity {
                     setResult(RESULT_OK, resultIntent);
                     this.finish();
                 }
+                break;
         }
     }
 
@@ -428,7 +428,6 @@ public class SendEmailActivity extends AppCompatActivity {
 //            mProgress.show();
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         protected void onPostExecute(String output) {
 //            mProgress.hide();
@@ -461,10 +460,12 @@ public class SendEmailActivity extends AppCompatActivity {
             }
         }
     }
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void cancelJob() {
-        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
-        jobScheduler.cancel(RecommendedTimeScreen.JOB_ID);
-        Log.d("tag","job cancelled");
+        JobScheduler jobScheduler = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            jobScheduler.cancel(RecommendedTimeScreen.JOB_ID);
+            Log.d("tag", "job cancelled");
+        }
     }
 }
