@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
+import com.app.android.ideatapp.home.models.ItemModel;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -31,11 +33,15 @@ import org.json.JSONObject;
 
 public class WritePostActivity extends AppCompatActivity {
 
+    public static final String MODEL = "model";
+    public static final String FOR_FB = "facebook";
+    public static final int OPEN_RECOMMENDED_SCREN_REQ_CODE = 1003;
     private CallbackManager callbackManager;
 
     private TextView profileName;
     private ImageView profileImage;
     private EditText sendMessage;
+    private ItemModel model;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,7 @@ public class WritePostActivity extends AppCompatActivity {
         setContentView(R.layout.write_post_activity);
         profileName = findViewById(R.id.profile_name);
         profileImage = findViewById(R.id.profile_image);
+        sendMessage = findViewById(R.id.send_messange);
         getFacebookInfo();
 
     }
@@ -58,10 +65,19 @@ public class WritePostActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                postMessageOnWall();
+                openRecommendedScreen();
+//                postMessageOnWall();
                 return true;
         }
         return true;
+    }
+
+    private void openRecommendedScreen() {
+        Intent intent = new Intent(this, RecommendedTimeScreen.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(FOR_FB, 0);
+        intent.putExtras(bundle);
+        startActivityForResult(intent,OPEN_RECOMMENDED_SCREN_REQ_CODE);
     }
 
     private void postMessageOnWall() {
@@ -98,7 +114,16 @@ public class WritePostActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == OPEN_RECOMMENDED_SCREN_REQ_CODE && resultCode == RESULT_OK) {
+            String date = data.getStringExtra(RecommendedTimeScreen.DATE);
+            String time = data.getStringExtra(RecommendedTimeScreen.TIME);
+            model = new ItemModel(sendMessage.getText().toString(), sendMessage.getText().toString(), date, time);
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(WritePostActivity.MODEL, model);
+            setResult(RESULT_OK, resultIntent);
+            this.finish();
+        }
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void getFacebookInfo() {

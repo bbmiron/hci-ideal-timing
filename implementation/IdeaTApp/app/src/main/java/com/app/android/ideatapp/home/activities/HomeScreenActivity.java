@@ -12,6 +12,7 @@ import android.view.View;
 import com.app.android.ideatapp.MainActivity;
 import com.app.android.ideatapp.R;
 import com.app.android.ideatapp.SendEmailActivity;
+import com.app.android.ideatapp.WritePostActivity;
 import com.app.android.ideatapp.home.adapters.TabsAdapter;
 import com.app.android.ideatapp.home.fragments.HistoryFragment;
 import com.app.android.ideatapp.home.fragments.HomeFragment;
@@ -66,15 +67,31 @@ public class HomeScreenActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null) {
-            ItemModel model = (ItemModel) data.getExtras().getParcelable(SendEmailActivity.MODEL);
-            Bundle bundle = new Bundle();
-            bundle.putString(TITLE, model.getTitle());
-            bundle.putString(DATE, model.getDate());
-            historyFragment.setArguments(bundle);
-            adapter.addFragment(historyFragment, "History");
-            viewPager.setAdapter(adapter);
-            viewPager.arrowScroll(View.FOCUS_RIGHT);
+        switch (requestCode) {
+            case HomeFragment.SEND_EMAIL_REQ_CODE:
+                if (resultCode == RESULT_OK) {
+                    ItemModel model = (ItemModel) data.getExtras().getParcelable(SendEmailActivity.MODEL);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(TITLE, model.getTitle());
+                    bundle.putString(DATE, model.getDate());
+                    historyFragment.setArguments(bundle);
+                    adapter.addFragment(historyFragment, "History");
+                    viewPager.setAdapter(adapter);
+                    viewPager.arrowScroll(View.FOCUS_RIGHT);
+                }
+                break;
+            case HomeFragment.WRITE_POST_REQ_CODE:
+                if (resultCode == RESULT_OK) {
+                    ItemModel model = (ItemModel) data.getExtras().getParcelable(WritePostActivity.MODEL);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(TITLE, model.getTitle());
+                    bundle.putString(DATE, model.getDate());
+                    historyFragment.setArguments(bundle);
+                    adapter.addFragment(historyFragment, "History");
+                    viewPager.setAdapter(adapter);
+                    viewPager.arrowScroll(View.FOCUS_RIGHT);
+                }
         }
+
     }
 }

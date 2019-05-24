@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.app.android.ideatapp.R;
+import com.app.android.ideatapp.WritePostActivity;
 import com.app.android.ideatapp.jobs.SendEmailJobService;
 
 import java.util.Calendar;
@@ -32,17 +33,26 @@ public class RecommendedTimeScreen extends AppCompatActivity {
     public static final String TIME = "time";
     private TextView recommendedDate;
     private TextView recommendedTime;
+    private TextView recommendedSubtitle;
     private Button editDateButton;
     private Button editTimeButton;
     private Button scheduleButton;
-    private int mYear, mMonth, mDay, mHour, mMinute;
+    private int mYear, mMonth, mDay, mHour, mMinute, activityOpened;
     
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recommended_screen_activity);
         init();
-        
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            activityOpened = bundle.getInt(WritePostActivity.FOR_FB);
+            if ( activityOpened == 0) {
+                recommendedSubtitle.setText(R.string.recommended_subtitle_for_facebook);
+            }
+        }
+
         editDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +71,9 @@ public class RecommendedTimeScreen extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                scheduleJob();
+                if (activityOpened != 0) {
+                    scheduleJob();
+                }
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra(DATE, recommendedDate.getText());
                 resultIntent.putExtra(TIME, recommendedTime.getText());
@@ -141,5 +153,6 @@ public class RecommendedTimeScreen extends AppCompatActivity {
         editDateButton = findViewById(R.id.edit_date);
         editTimeButton = findViewById(R.id.edit_time);
         scheduleButton = findViewById(R.id.ok_button);
+        recommendedSubtitle = findViewById(R.id.recommended_subtitle);
     }
 }

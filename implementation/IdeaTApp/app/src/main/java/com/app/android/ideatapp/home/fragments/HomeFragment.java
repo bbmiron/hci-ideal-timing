@@ -1,10 +1,12 @@
 package com.app.android.ideatapp.home.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
 
 public class HomeFragment extends Fragment {
     public static final int SEND_EMAIL_REQ_CODE = 10001;
+    public static final int WRITE_POST_REQ_CODE = 10005;
     private Button writePostButton;
     private Button uploadPhotoButton;
     private Button sendEmailButton;
@@ -43,7 +46,11 @@ public class HomeFragment extends Fragment {
         writePostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), WritePostActivity.class));
+                if (MainActivity.ACCESS_TOKEN != null) {
+                    getActivity().startActivityForResult(new Intent(getContext(), WritePostActivity.class), WRITE_POST_REQ_CODE);
+                } else {
+                    createAlertDialog();
+                }
             }
         });
 
@@ -69,5 +76,18 @@ public class HomeFragment extends Fragment {
             }
         });
 
+    }
+    private void createAlertDialog() {
+        new AlertDialog.Builder(this.getContext())
+                .setTitle("Info")
+                .setMessage("You should be logged in with Facebook")
+                .setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(getContext(), MainActivity.class));
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }
