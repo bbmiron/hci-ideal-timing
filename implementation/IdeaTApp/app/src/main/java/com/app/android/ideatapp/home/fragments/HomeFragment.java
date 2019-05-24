@@ -15,12 +15,13 @@ import android.widget.Button;
 import com.app.android.ideatapp.MainActivity;
 import com.app.android.ideatapp.R;
 import com.app.android.ideatapp.SendEmailActivity;
+import com.app.android.ideatapp.UploadPhotoActivity;
 import com.app.android.ideatapp.WritePostActivity;
-import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
 
 public class HomeFragment extends Fragment {
     public static final int SEND_EMAIL_REQ_CODE = 10001;
     public static final int WRITE_POST_REQ_CODE = 10005;
+    public static final int UPLOAD_PHOTO_REQ_CODE = 1006;
     private Button writePostButton;
     private Button uploadPhotoButton;
     private Button sendEmailButton;
@@ -61,10 +62,14 @@ public class HomeFragment extends Fragment {
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), SendEmailActivity.class);
-                intent.putExtra(MainActivity.EMAIL_TAG, email);
-                intent.putExtra(MainActivity.NAME_TAG, name);
-                getActivity().startActivityForResult(intent, SEND_EMAIL_REQ_CODE);
+                if (email != null) {
+                    Intent intent = new Intent(getContext(), SendEmailActivity.class);
+                    intent.putExtra(MainActivity.EMAIL_TAG, email);
+                    intent.putExtra(MainActivity.NAME_TAG, name);
+                    getActivity().startActivityForResult(intent, SEND_EMAIL_REQ_CODE);
+                } else {
+                    createAlertDialogForGmail();
+                }
             }
         });
 
@@ -72,11 +77,30 @@ public class HomeFragment extends Fragment {
         uploadPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), RecommendedTimeScreen.class));
+                if (MainActivity.ACCESS_TOKEN != null) {
+                    getActivity().startActivityForResult(new Intent(getContext(), UploadPhotoActivity.class), UPLOAD_PHOTO_REQ_CODE);
+                } else {
+                    createAlertDialog();
+                }
             }
         });
 
     }
+
+    private void createAlertDialogForGmail() {
+        new AlertDialog.Builder(this.getContext())
+                .setTitle("Info")
+                .setMessage("You should be logged in with a Google Account")
+                .setPositiveButton("Login", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(getContext(), MainActivity.class));
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
     private void createAlertDialog() {
         new AlertDialog.Builder(this.getContext())
                 .setTitle("Info")

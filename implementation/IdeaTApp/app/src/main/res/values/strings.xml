@@ -15,4 +15,5 @@
     <string name="recommended_subtitle">Accordingly your google calendar, the recommended time for sending this email is:\n</string>
     <string name="footer">You can schedule the email or edit the date and time</string>
     <string name="recommended_subtitle_for_facebook">The recommended time for posting a job because:\n100 active users at 9:00\n 143 active users now</string>
+    <string name="recommended_subtitle_for_upload">The recommended time for uploading a photo because:\n100 active users at 9:00\n 143 active users now</string>
 </resources>

@@ -50,6 +50,8 @@ public class RecommendedTimeScreen extends AppCompatActivity {
             activityOpened = bundle.getInt(WritePostActivity.FOR_FB);
             if ( activityOpened == 0) {
                 recommendedSubtitle.setText(R.string.recommended_subtitle_for_facebook);
+            } else if (activityOpened == 1) {
+                recommendedSubtitle.setText(R.string.recommended_subtitle_for_upload);
             }
         }
 
@@ -71,7 +73,7 @@ public class RecommendedTimeScreen extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                if (activityOpened != 0) {
+                if (activityOpened != 0 || activityOpened != 1) {
                     scheduleJob();
                 }
                 Intent resultIntent = new Intent();
