@@ -59,17 +59,20 @@ import com.google.api.services.calendar.model.FreeBusyCalendar;
 import com.google.api.services.calendar.model.FreeBusyRequest;
 import com.google.api.services.calendar.model.FreeBusyRequestItem;
 import com.google.api.services.calendar.model.FreeBusyResponse;
+import com.google.api.services.calendar.model.TimePeriod;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Properties;
 
@@ -85,9 +88,12 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+
 public class SendEmailActivity extends AppCompatActivity {
 
     public static final String MODEL = "model";
+    public static final String DATE = "date";
+    public static final String TIME = "time";
     public static final int REC_REQ_CODE = 10002;
     private EditText from;
     EditText edtToAddress, edtSubject, edtMessage, edtAttachmentData;
@@ -97,6 +103,7 @@ public class SendEmailActivity extends AppCompatActivity {
     private ItemModel model;
     private View viewSend;
     public static SendEmailActivity instance;
+    private String busyDate = null, busyTime = null;
 
     GoogleAccountCredential mCredential;
     GoogleAccountCredential credentialCalendar;
@@ -144,14 +151,17 @@ public class SendEmailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 viewSend = view;
                 getRecommendedDateTime();
-//                openRecommendedScreen();
+                //openRecommendedScreen();
             }
         });
 
     }
 
     private void openRecommendedScreen() {
-        startActivityForResult(new Intent(this, RecommendedTimeScreen.class), REC_REQ_CODE);
+        Intent intentSchedule = new Intent(this, RecommendedTimeScreen.class);
+        intentSchedule.putExtra(DATE,busyDate);
+        intentSchedule.putExtra(TIME,busyTime);
+        startActivityForResult(intentSchedule, REC_REQ_CODE);
     }
 
     private void init() {
@@ -497,9 +507,6 @@ public class SendEmailActivity extends AppCompatActivity {
     }
 
     private void getRecommendedDateTime(){
-        //Logger.getLogger("com.google.api.client").setLevel(LOGGING_LEVEL);
-        // Calendar client
-
         String accountName = from.getText().toString();
         if (accountName != null && accountName.contains("@gmail")) {
             mCredential.setSelectedAccountName(accountName);
@@ -513,32 +520,52 @@ public class SendEmailActivity extends AppCompatActivity {
         item.setId(from.getText().toString());
         itemList.add(item);
 
+        java.util.Calendar c = java.util.Calendar.getInstance();
+        c.add(java.util.Calendar.DAY_OF_YEAR, 1);
+        Date tomorrow = c.getTime();
+
+        SimpleDateFormat sdfd = new SimpleDateFormat("yyyy-MM-dd");
+        final String currentDate = sdfd.format(tomorrow);
+
+        String currentDateandTime = currentDate + "T" + "00:00:00.0Z";
+        String maxInterval = currentDate + "T" + "23:59:59.0Z";
+
         final FreeBusyRequest request = new FreeBusyRequest();
-        request.setTimeZone("UTC");
-        request.setTimeMin(new DateTime("2019-05-01T00:00:00.0Z"));
-        request.setTimeMax(new DateTime("2019-06-01T00:00:00.0Z"));
+        request.setTimeZone("Europe/Bucharest");
+        request.setTimeMin(new DateTime(currentDateandTime));
+        request.setTimeMax(new DateTime(maxInterval));
         request.setItems(itemList);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //FreeBusyResponse response = client.freebusy().query(request).execute();
+                try {
 
-
-        Log.d("myTag6","hei");
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    //FreeBusyResponse response = client.freebusy().query(request).execute();
-                    try {
-                        Calendar.Freebusy.Query calendarQuery = client.freebusy().query(request);
-                        FreeBusyResponse busyResponse = calendarQuery.execute();
-                        for (Map.Entry<String, FreeBusyCalendar> entry : busyResponse.getCalendars().entrySet()) {
-                            Log.d(entry.getKey(), entry.getValue().toString());
-                        }
-
-                    }catch (IOException e) {
-                        Log.d("myTag8","hei");
-                        e.printStackTrace();
+                    Calendar.Freebusy.Query calendarQuery = client.freebusy().query(request);
+                    FreeBusyResponse busyResponse = calendarQuery.execute();
+                    List<TimePeriod> busyList = null;
+                    for (Map.Entry<String, FreeBusyCalendar> entry : busyResponse.getCalendars().entrySet()) {
+                        //Log.d(entry.getKey(), entry.getValue().toString());
+                        busyList = entry.getValue().getBusy();
                     }
-                    Log.d("myTag7","hei");
+                    if (busyList.isEmpty()){
+                        busyDate = currentDate;
+                        busyTime = "10:00";
+                    }
+                    else{
+                        DateTime busyDateTime = busyList.get(0).getStart();
+                        busyDate = busyDateTime.toString().substring(0,busyDateTime.toString().indexOf("T"));
+                        busyTime = busyDateTime.toString().substring(busyDateTime.toString().indexOf("T")+1,busyDateTime.toString().indexOf("T")+6);
+                    }
+                    openRecommendedScreen();
+
+                }catch (IOException e) {
+                    e.printStackTrace();
                 }
-            }).start();
-        }
+            }
+        }).start();
+
+    }
+
 }

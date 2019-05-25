@@ -24,26 +24,8 @@ import android.widget.TimePicker;
 import com.app.android.ideatapp.R;
 import com.app.android.ideatapp.WritePostActivity;
 import com.app.android.ideatapp.jobs.SendEmailJobService;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.client.util.DateTime;
-import com.google.api.services.calendar.CalendarScopes;
-import com.google.api.services.calendar.model.FreeBusyRequest;
-import com.google.api.services.calendar.model.FreeBusyRequestItem;
-import com.google.api.services.calendar.model.FreeBusyResponse;
-import com.google.api.services.calendar.Calendar.Freebusy;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
+
 
 public class RecommendedTimeScreen extends AppCompatActivity {
 
@@ -161,7 +143,12 @@ public class RecommendedTimeScreen extends AppCompatActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        recommendedDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        if((monthOfYear+1)<10) {
+                            recommendedDate.setText(dayOfMonth + "-" + "0" + (monthOfYear + 1) + "-" + year);
+                        }
+                        else{
+                            recommendedDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        }
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
@@ -174,5 +161,9 @@ public class RecommendedTimeScreen extends AppCompatActivity {
         editTimeButton = findViewById(R.id.edit_time);
         scheduleButton = findViewById(R.id.ok_button);
         recommendedSubtitle = findViewById(R.id.recommended_subtitle);
+
+        recommendedDate.setText(getIntent().getStringExtra(DATE));
+        recommendedTime.setText(getIntent().getStringExtra(TIME));
+
     }
 }
