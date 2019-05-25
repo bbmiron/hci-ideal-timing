@@ -1,6 +1,7 @@
 package com.app.android.ideatapp;
 
 import android.Manifest;
+import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -213,8 +214,16 @@ public class SendEmailActivity extends AppCompatActivity {
     // Storing Mail ID using Shared Preferences
     private void chooseAccount(View view) {
         if (Utils.checkPermission(getApplicationContext(), Manifest.permission.GET_ACCOUNTS)) {
-            String accountName = getPreferences(Context.MODE_PRIVATE).getString(PREF_ACCOUNT_NAME, null);
-            if (accountName != null) {
+            String accountName = from.getText().toString();
+//            AccountManager am = AccountManager.get(this);
+//            Account[] accounts = am.getAccountsByType("com.google");
+//            for (Account account : accounts) {
+//                if (account.name.contains("@gmail")){
+//                    accountName = account.name;
+//                }
+//            }
+//            String accountName = getPreferences(Context.MODE_PRIVATE).getString(PREF_ACCOUNT_NAME, null);
+            if (accountName != null && accountName.contains("@gmail")) {
                 mCredential.setSelectedAccountName(accountName);
                 getResultsFromApi();
             } else {

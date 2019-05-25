@@ -120,7 +120,7 @@ public class RecommendedTimeScreen extends AppCompatActivity {
         JobInfo jobInfo = new JobInfo.Builder(JOB_ID, componentName)
                 .setRequiresCharging(true)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .setPeriodic(10000)
+                .setPeriodic(20000)
                 .setPersisted(true)
                 .setExtras(bundle)
                 .build();
