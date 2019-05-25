@@ -57,13 +57,6 @@ public class RecommendedTimeScreen extends AppCompatActivity {
     private Button editTimeButton;
     private Button scheduleButton;
     private int mYear, mMonth, mDay, mHour, mMinute, activityOpened;
-
-    private static final Level LOGGING_LEVEL = Level.OFF;
-    private static final String PREF_ACCOUNT_NAME = "gusa.diana@gmail.com";
-    GoogleAccountCredential credential;
-    com.google.api.services.calendar.Calendar client;
-    final HttpTransport transport = AndroidHttp.newCompatibleTransport();
-    final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
     
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -181,42 +174,5 @@ public class RecommendedTimeScreen extends AppCompatActivity {
         editTimeButton = findViewById(R.id.edit_time);
         scheduleButton = findViewById(R.id.ok_button);
         recommendedSubtitle = findViewById(R.id.recommended_subtitle);
-    }
-
-    private void getRecommendedDateTime(){
-        //Logger.getLogger("com.google.api.client").setLevel(LOGGING_LEVEL);
-        credential = GoogleAccountCredential.usingOAuth2(this, Collections.singleton(CalendarScopes.CALENDAR));
-        SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
-        credential.setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
-
-        // Calendar client
-        client = new com.google.api.services.calendar.Calendar.Builder(transport, jsonFactory, credential)
-                .setApplicationName("IdeaTAppV1.1")
-                .build();
-
-        List<FreeBusyRequestItem> itemList = new ArrayList<FreeBusyRequestItem>();
-        FreeBusyRequestItem item = new FreeBusyRequestItem();
-        item.setId("gusa.diana@gmail.com");
-        itemList.add(item);
-
-        FreeBusyRequest request = new FreeBusyRequest();
-        request.setTimeZone("UTC");
-        request.setTimeMin(new DateTime(new Date(2019,05,01,00,00,00)));
-        request.setTimeMax(new DateTime(new Date(2019,05,01,00,00,00)));
-        request.setItems(itemList);
-        Log.d("myTag6","hei");
-        try {
-            //FreeBusyResponse response = client.freebusy().query(request).execute();
-            Freebusy.Query calendarQuery = client.freebusy().query(request);
-            FreeBusyResponse busyResponse = calendarQuery.execute();
-            Log.d("myTag7","hei");
-            /*for (Map.Entry<String, FreeBusyCalendar> entry : response.getCalendars().entrySet()) {
-                Log.d(entry.getKey(), entry.getValue().toPrettyString());
-            }*/
-
-        } catch (IOException e) {
-            Log.d("myTag8","hei");
-            e.printStackTrace();
-        }
     }
 }

@@ -81,8 +81,7 @@ public class HomeFragment extends Fragment {
                 if (MainActivity.ACCESS_TOKEN != null) {
                     getActivity().startActivityForResult(new Intent(getContext(), UploadPhotoActivity.class), UPLOAD_PHOTO_REQ_CODE);
                 } else {
-                    //createAlertDialog();
-                    getActivity().startActivityForResult(new Intent(getContext(), RecommendedTimeScreen.class), UPLOAD_PHOTO_REQ_CODE);
+                    createAlertDialog();
                 }
             }
         });

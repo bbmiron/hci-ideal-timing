@@ -30,7 +30,7 @@ public class QueueItemsAdapter extends RecyclerView.Adapter<QueueItemsAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ItemModel itemModel = modelsList.get(position);
         holder.title.setText(itemModel.getTitle());
-        holder.subtitle.setText(itemModel.getDate());
+        holder.subtitle.setText(itemModel.getTime());
     }
 
     @Override

@@ -48,16 +48,29 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlaySe
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
+import com.google.api.client.util.DateTime;
 import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.calendar.Calendar;
+import com.google.api.services.calendar.CalendarScopes;
+import com.google.api.services.calendar.model.FreeBusyCalendar;
+import com.google.api.services.calendar.model.FreeBusyRequest;
+import com.google.api.services.calendar.model.FreeBusyRequestItem;
+import com.google.api.services.calendar.model.FreeBusyResponse;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.GmailScopes;
 import com.google.api.services.gmail.model.Message;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -86,6 +99,7 @@ public class SendEmailActivity extends AppCompatActivity {
     public static SendEmailActivity instance;
 
     GoogleAccountCredential mCredential;
+    GoogleAccountCredential credentialCalendar;
     ProgressDialog mProgress;
     private static final String PREF_ACCOUNT_NAME = "accountName";
     private static final String[] SCOPES = {
@@ -94,11 +108,15 @@ public class SendEmailActivity extends AppCompatActivity {
             GmailScopes.GMAIL_INSERT,
             GmailScopes.GMAIL_MODIFY,
             GmailScopes.GMAIL_READONLY,
-            GmailScopes.MAIL_GOOGLE_COM
+            GmailScopes.MAIL_GOOGLE_COM,
+            CalendarScopes.CALENDAR
     };
     private InternetDetector internetDetector;
     private final int SELECT_PHOTO = 1;
     public String fileName = "";
+    com.google.api.services.calendar.Calendar client;
+    final HttpTransport transport = AndroidHttp.newCompatibleTransport();
+    final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -125,8 +143,8 @@ public class SendEmailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 viewSend = view;
-                openRecommendedScreen();
-//                getResultsFromApi(view);
+                getRecommendedDateTime();
+//                openRecommendedScreen();
             }
         });
 
@@ -477,4 +495,50 @@ public class SendEmailActivity extends AppCompatActivity {
             Log.d("tag", "job cancelled");
         }
     }
+
+    private void getRecommendedDateTime(){
+        //Logger.getLogger("com.google.api.client").setLevel(LOGGING_LEVEL);
+        // Calendar client
+
+        String accountName = from.getText().toString();
+        if (accountName != null && accountName.contains("@gmail")) {
+            mCredential.setSelectedAccountName(accountName);
+        }
+        client = new com.google.api.services.calendar.Calendar.Builder(transport, jsonFactory, mCredential)
+                .setApplicationName("IdeaTAppV1.1")
+                .build();
+
+        List<FreeBusyRequestItem> itemList = new ArrayList<FreeBusyRequestItem>();
+        FreeBusyRequestItem item = new FreeBusyRequestItem();
+        item.setId(from.getText().toString());
+        itemList.add(item);
+
+        final FreeBusyRequest request = new FreeBusyRequest();
+        request.setTimeZone("UTC");
+        request.setTimeMin(new DateTime("2019-05-01T00:00:00.0Z"));
+        request.setTimeMax(new DateTime("2019-06-01T00:00:00.0Z"));
+        request.setItems(itemList);
+
+
+
+        Log.d("myTag6","hei");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    //FreeBusyResponse response = client.freebusy().query(request).execute();
+                    try {
+                        Calendar.Freebusy.Query calendarQuery = client.freebusy().query(request);
+                        FreeBusyResponse busyResponse = calendarQuery.execute();
+                        for (Map.Entry<String, FreeBusyCalendar> entry : busyResponse.getCalendars().entrySet()) {
+                            Log.d(entry.getKey(), entry.getValue().toString());
+                        }
+
+                    }catch (IOException e) {
+                        Log.d("myTag8","hei");
+                        e.printStackTrace();
+                    }
+                    Log.d("myTag7","hei");
+                }
+            }).start();
+        }
 }
