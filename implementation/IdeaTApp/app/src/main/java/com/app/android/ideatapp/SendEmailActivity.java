@@ -88,6 +88,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import static com.app.android.ideatapp.WritePostActivity.FOR_FB;
+
 
 public class SendEmailActivity extends AppCompatActivity {
 
@@ -161,6 +163,9 @@ public class SendEmailActivity extends AppCompatActivity {
         Intent intentSchedule = new Intent(this, RecommendedTimeScreen.class);
         intentSchedule.putExtra(DATE,busyDate);
         intentSchedule.putExtra(TIME,busyTime);
+        Bundle bundle = new Bundle();
+        bundle.putInt(FOR_FB, 2);
+        intentSchedule.putExtras(bundle);
         startActivityForResult(intentSchedule, REC_REQ_CODE);
     }
 

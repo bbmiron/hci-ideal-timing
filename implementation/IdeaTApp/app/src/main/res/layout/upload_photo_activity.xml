@@ -67,29 +67,30 @@
         app:layout_constraintTop_toBottomOf="@+id/divider2"
         tools:layout_editor_absoluteY="104dp" />
 
-    <Button
-        android:id="@+id/attachment"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="@dimen/normal_margin"
-        android:background="@drawable/ic_attachment_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/attachmentData"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <EditText
         android:id="@+id/attachmentData"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/normal_margin"
         android:layout_weight="2"
         android:clickable="false"
         android:enabled="false"
         android:hint="Attachment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/send_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/attachment"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/send_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/normal_margin"
+        android:src="@android:drawable/ic_menu_send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/attachment" />
+        app:layout_constraintStart_toEndOf="@+id/attachmentData" />
 
 </android.support.constraint.ConstraintLayout>

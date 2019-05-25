@@ -38,7 +38,7 @@ public class RecommendedTimeScreen extends AppCompatActivity {
     private Button editDateButton;
     private Button editTimeButton;
     private Button scheduleButton;
-    private int mYear, mMonth, mDay, mHour, mMinute, activityOpened;
+    private int mYear, mMonth, mDay, mHour, mMinute, activityOpened = -1;
     
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,10 +50,17 @@ public class RecommendedTimeScreen extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
             activityOpened = bundle.getInt(WritePostActivity.FOR_FB);
-            if ( activityOpened == 0) {
-                recommendedSubtitle.setText(R.string.recommended_subtitle_for_facebook);
-            } else if (activityOpened == 1) {
-                recommendedSubtitle.setText(R.string.recommended_subtitle_for_upload);
+            switch (activityOpened) {
+                case 0:
+                    recommendedSubtitle.setText(R.string.recommended_subtitle_for_facebook);
+                    break;
+                case 1:
+                    recommendedSubtitle.setText(R.string.recommended_subtitle_for_upload);
+                    break;
+                case 2:
+                    recommendedSubtitle.setText(R.string.recommended_subtitle);
+                    break;
+
             }
         }
 

@@ -16,7 +16,7 @@ import java.util.Locale;
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class SendEmailJobService extends JobService {
 
-    private static final String DATE_FORMAT = "dd-M-yyyy";
+    private static final String DATE_FORMAT = "dd-MM-yyyy";
     private static final String TIME_FORMAT = "HH:mm";
     private boolean jobCancelled = false;
     @Override

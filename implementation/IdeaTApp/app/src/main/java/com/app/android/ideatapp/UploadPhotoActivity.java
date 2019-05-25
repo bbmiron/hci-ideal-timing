@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -42,9 +43,9 @@ public class UploadPhotoActivity extends AppCompatActivity {
     private TextView profileName;
     private ImageView profileImage;
     private ImageView photo;
-    private Button attachemendButton;
     private EditText photoPath;
     private ItemModel model;
+    private FloatingActionButton sendButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,10 +59,10 @@ public class UploadPhotoActivity extends AppCompatActivity {
                 browsePhoto();
             }
         });
-        attachemendButton.setOnClickListener(new View.OnClickListener() {
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              browsePhoto();
+              openRecommendedScreen();
             }
         });
     }
@@ -82,8 +83,8 @@ public class UploadPhotoActivity extends AppCompatActivity {
         profileName = findViewById(R.id.profile_name);
         profileImage = findViewById(R.id.profile_image);
         photo = findViewById(R.id.photo_to_send);
-        attachemendButton = findViewById(R.id.attachment);
         photoPath = findViewById(R.id.attachmentData);
+        sendButton = findViewById(R.id.send_button);
     }
 
     private void getFacebookInfo() {
@@ -166,22 +167,6 @@ public class UploadPhotoActivity extends AppCompatActivity {
         return res;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_save, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_save:
-                openRecommendedScreen();
-                return true;
-        }
-        return true;
-    }
 
     private void openRecommendedScreen() {
         Intent intent = new Intent(this, RecommendedTimeScreen.class);

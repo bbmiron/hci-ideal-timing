@@ -3,11 +3,13 @@ package com.app.android.ideatapp;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,6 +44,7 @@ public class WritePostActivity extends AppCompatActivity {
     private ImageView profileImage;
     private EditText sendMessage;
     private ItemModel model;
+    private FloatingActionButton sendButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,26 +53,15 @@ public class WritePostActivity extends AppCompatActivity {
         profileName = findViewById(R.id.profile_name);
         profileImage = findViewById(R.id.profile_image);
         sendMessage = findViewById(R.id.send_messange);
+        sendButton = findViewById(R.id.send_button);
         getFacebookInfo();
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_save, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_save:
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 openRecommendedScreen();
-//                postMessageOnWall();
-                return true;
-        }
-        return true;
+            }
+        });
+
     }
 
     private void openRecommendedScreen() {
