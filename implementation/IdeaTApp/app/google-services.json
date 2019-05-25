@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "714060525741-ak76r0mvquaisnl0lmui84rhcdelrbd1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.android.ideatapp",
+            "certificate_hash": "36bbeae9f1bb0f46aa675d0d5d8a1424daadb296"
+          }
+        },
+        {
           "client_id": "714060525741-3eej95bj8ljrrraiehqsmh4ial2sih3l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
