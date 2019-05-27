@@ -12,16 +12,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.android.ideatapp.helpers.DatabaseManager;
 import com.app.android.ideatapp.helpers.Utils;
 import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
 import com.app.android.ideatapp.home.models.ItemModel;
@@ -144,10 +141,9 @@ public class UploadPhotoActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     String date = data.getStringExtra(RecommendedTimeScreen.DATE);
                     String time = data.getStringExtra(RecommendedTimeScreen.TIME);
-                    model = new ItemModel("Upload photo", photoPath.getText().toString(), date, time);
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra(WritePostActivity.MODEL, model);
-                    setResult(RESULT_OK, resultIntent);
+                    model = new ItemModel("Upload photo", date, time, "FACEBOOK");
+                    model.setId(DatabaseManager.getInstance(this).addNewTask(model));
+                    setResult(RESULT_OK, new Intent());
                     this.finish();
                 }
                 break;

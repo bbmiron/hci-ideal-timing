@@ -5,30 +5,42 @@ import android.os.Parcelable;
 
 public class ItemModel implements Parcelable {
 
+    private long id;
     private String title;
-    private String subtitle;
     private String date;
     private String time;
+    private String status;
+    private String source;
 
     public ItemModel() {}
 
     public ItemModel(Parcel in) {
-        title = in.readString();
-        subtitle = in.readString();
-        date = in.readString();
-        time = in.readString();
+        this.title = in.readString();
+        this.date = in.readString();
+        this.time = in.readString();
+        this.status = "PENDING";
     }
 
-    public ItemModel(String title, String date) {
+    public ItemModel(String title, String source) {
         this.title = title;
-        this.date = date;
+        this.source = source;
+        this.status = "PENDING";
     }
 
-    public ItemModel(String title, String subtitle, String date, String time) {
+    public ItemModel(String title, String date, String time, String source) {
         this.title = title;
-        this.subtitle = subtitle;
         this.date = date;
         this.time = time;
+        this.status = "PENDING";
+        this.source = source;
+    }
+
+    public ItemModel(String title, String source, String status, String date, String time) {
+        this.title = title;
+        this.date = date;
+        this.time = time;
+        this.status = status;
+        this.source = source;
     }
 
     public static final Creator<ItemModel> CREATOR = new Creator<ItemModel>() {
@@ -51,14 +63,6 @@ public class ItemModel implements Parcelable {
         this.title = title;
     }
 
-    public String getSubtitle() {
-        return subtitle;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -67,7 +71,6 @@ public class ItemModel implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(title);
-        parcel.writeString(subtitle);
         parcel.writeString(date);
         parcel.writeString(time);
     }
@@ -86,5 +89,29 @@ public class ItemModel implements Parcelable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getSource() {
+        return this.source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return this.id;
     }
 }

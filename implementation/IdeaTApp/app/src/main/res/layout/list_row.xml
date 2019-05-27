@@ -7,16 +7,25 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/small_margin"
-    android:paddingLeft="@dimen/small_margin"
-    android:paddingRight="@dimen/small_margin"
-    android:paddingTop="@dimen/small_margin">
+    android:padding="@dimen/small_margin">
+
+    <ImageView
+        android:id="@+id/source"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/btn_margin_top"
+        android:background="@android:color/holo_blue_dark"
+        android:src="@drawable/com_facebook_button_icon"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/source"
+        android:layout_toLeftOf="@+id/status"
         android:textSize="@dimen/text_18sp"
         android:textStyle="bold"
         android:text="Junior Android Dev"/>
@@ -25,7 +34,17 @@
         android:id="@+id/subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/source"
+        android:layout_toLeftOf="@+id/status"
         android:layout_below="@id/title"
-        android:text="Status"/>
+        android:text="Time"/>
+
+    <ImageView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_hourglass"/>
 
 </RelativeLayout>

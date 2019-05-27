@@ -24,7 +24,11 @@ import android.widget.TimePicker;
 import com.app.android.ideatapp.R;
 import com.app.android.ideatapp.WritePostActivity;
 import com.app.android.ideatapp.jobs.SendEmailJobService;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class RecommendedTimeScreen extends AppCompatActivity {
@@ -32,6 +36,9 @@ public class RecommendedTimeScreen extends AppCompatActivity {
     public static final int JOB_ID = 100;
     public static final String DATE = "date";
     public static final String TIME = "time";
+    public static final String ID = "id";
+    private static final String DATE_FORMAT = "dd-MM-yyyy";
+    private static final String TIME_FORMAT = "HH:mm";
     private TextView recommendedDate;
     private TextView recommendedTime;
     private TextView recommendedSubtitle;
@@ -87,6 +94,7 @@ public class RecommendedTimeScreen extends AppCompatActivity {
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra(DATE, recommendedDate.getText());
                 resultIntent.putExtra(TIME, recommendedTime.getText());
+                resultIntent.putExtra(ID, getIntent().getLongExtra(ID, 0L));
                 setResult(RESULT_OK, resultIntent);
                 finish();
             }
@@ -128,11 +136,22 @@ public class RecommendedTimeScreen extends AppCompatActivity {
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        if(minute < 10) {
-                            recommendedTime.setText(hourOfDay + ":0" + minute);
-                        } else {
-                            recommendedTime.setText(hourOfDay + ":" + minute);
+                        String hour = "";
+                        if (hourOfDay < 10) {
+                            hour += "0";
                         }
+                        hour += hourOfDay;
+                        if(minute < 10) {
+                            recommendedTime.setText(hour + ":0" + minute);
+                        } else {
+                            recommendedTime.setText(hour + ":" + minute);
+                        }
+
+                        String currentDate = new SimpleDateFormat(DATE_FORMAT,
+                                Locale.getDefault()).format(new Date());
+                        String currentTime = new SimpleDateFormat(TIME_FORMAT,
+                                Locale.getDefault()).format(new Date());
+                        Log.d("tag", currentDate + " " + currentTime);
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();

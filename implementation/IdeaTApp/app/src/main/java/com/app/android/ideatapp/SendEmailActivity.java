@@ -1,26 +1,17 @@
 package com.app.android.ideatapp;
 
 import android.Manifest;
-import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.app.job.JobInfo;
-import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
-import android.app.job.JobService;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,18 +19,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.app.android.ideatapp.helpers.DatabaseManager;
 import com.app.android.ideatapp.helpers.InternetDetector;
 import com.app.android.ideatapp.helpers.Utils;
 import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
 import com.app.android.ideatapp.home.models.ItemModel;
-import com.app.android.ideatapp.jobs.SendEmailJobService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -69,10 +58,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Properties;
 
@@ -89,6 +76,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import static com.app.android.ideatapp.WritePostActivity.FOR_FB;
+import static com.app.android.ideatapp.helpers.Utils.REQUEST_AUTHORIZATION;
 
 
 public class SendEmailActivity extends AppCompatActivity {
@@ -96,6 +84,7 @@ public class SendEmailActivity extends AppCompatActivity {
     public static final String MODEL = "model";
     public static final String DATE = "date";
     public static final String TIME = "time";
+    public static final String ID = "id";
     public static final int REC_REQ_CODE = 10002;
     private EditText from;
     EditText edtToAddress, edtSubject, edtMessage, edtAttachmentData;
@@ -161,8 +150,11 @@ public class SendEmailActivity extends AppCompatActivity {
 
     private void openRecommendedScreen() {
         Intent intentSchedule = new Intent(this, RecommendedTimeScreen.class);
+        model = new ItemModel(edtSubject.getText().toString(), "EMAIL");
+        model.setId(DatabaseManager.getInstance(this).addNewTask(model));
         intentSchedule.putExtra(DATE,busyDate);
         intentSchedule.putExtra(TIME,busyTime);
+        intentSchedule.putExtra(ID,model.getId());
         Bundle bundle = new Bundle();
         bundle.putInt(FOR_FB, 2);
         intentSchedule.putExtras(bundle);
@@ -310,7 +302,7 @@ public class SendEmailActivity extends AppCompatActivity {
                     }
                 }
                 break;
-            case Utils.REQUEST_AUTHORIZATION:
+            case REQUEST_AUTHORIZATION:
                 if (resultCode == RESULT_OK) {
                     viewSend = sendFabButton;
                     getResultsFromApi();
@@ -327,10 +319,9 @@ public class SendEmailActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     String date = data.getStringExtra(RecommendedTimeScreen.DATE);
                     String time = data.getStringExtra(RecommendedTimeScreen.TIME);
-                    model = new ItemModel(edtSubject.getText().toString(), edtSubject.getText().toString(), date, time);
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra(MODEL, model);
-                    setResult(RESULT_OK, resultIntent);
+                    DatabaseManager.getInstance(this).updateTaskDateTime(model.getId(), date, time);
+                    Log.d("tag", email + " " + edtToAddress.getText().toString());
+                    setResult(RESULT_OK, new Intent());
                     this.finish();
                 }
                 break;
@@ -492,7 +483,7 @@ public class SendEmailActivity extends AppCompatActivity {
                 } else if (mLastError instanceof UserRecoverableAuthIOException) {
                     startActivityForResult(
                             ((UserRecoverableAuthIOException) mLastError).getIntent(),
-                            Utils.REQUEST_AUTHORIZATION);
+                            REQUEST_AUTHORIZATION);
                 } else {
                     showMessage(view, "The following error occurred:\n" + mLastError);
                     Log.v("Error", mLastError + "");
@@ -565,7 +556,9 @@ public class SendEmailActivity extends AppCompatActivity {
                     }
                     openRecommendedScreen();
 
-                }catch (IOException e) {
+                } catch (UserRecoverableAuthIOException e) {
+                    startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

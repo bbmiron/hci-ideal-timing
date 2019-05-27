@@ -1,5 +1,7 @@
 package com.app.android.ideatapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -9,6 +11,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public static final String NAME_TAG = "name";
     public static final String EMAIL_TAG = "email";
     public static final String PHOTO_TAG = "photo";
+    public static final String CHANNEL_ID = "main";
 
     public static AccessToken ACCESS_TOKEN = null;
     private LoginButton loginButton;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initNotificationChannel();
         initFacebookSdk();
         setContentView(R.layout.activity_main);
         customizeLogo();
@@ -91,6 +96,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         });
 
+    }
+
+    private void initNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Task completed", importance);
+            channel.setDescription("The task is completed");
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
     }
 
     private void googleSignin() {
