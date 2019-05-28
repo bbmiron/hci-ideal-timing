@@ -17,7 +17,8 @@
         android:layout_centerVertical="true"
         android:layout_margin="@dimen/btn_margin_top"
         android:background="@android:color/holo_blue_dark"
-        android:src="@drawable/com_facebook_button_icon"/>
+        android:src="@drawable/com_facebook_button_icon"
+        android:contentDescription="source"/>
 
     <TextView
         android:id="@+id/title"
@@ -45,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_hourglass"/>
+        android:src="@drawable/ic_hourglass"
+        android:contentDescription="status"/>
 
 </RelativeLayout>

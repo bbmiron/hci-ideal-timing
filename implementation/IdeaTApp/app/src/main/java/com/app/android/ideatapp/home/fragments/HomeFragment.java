@@ -17,7 +17,6 @@ import com.app.android.ideatapp.R;
 import com.app.android.ideatapp.SendEmailActivity;
 import com.app.android.ideatapp.UploadPhotoActivity;
 import com.app.android.ideatapp.WritePostActivity;
-import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
 
 public class HomeFragment extends Fragment {
     public static final int SEND_EMAIL_REQ_CODE = 10001;

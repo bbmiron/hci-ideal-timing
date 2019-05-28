@@ -24,6 +24,7 @@
         android:layout_marginLeft="@dimen/normal_margin"
         android:layout_marginTop="@dimen/normal_margin"
         android:layout_marginBottom="@dimen/normal_margin"
+        android:contentDescription="profile image"
         app:layout_constraintBottom_toTopOf="@id/divider2"
         app:layout_constraintEnd_toStartOf="@+id/profile_name"
         app:layout_constraintHorizontal_bias="0.5"
