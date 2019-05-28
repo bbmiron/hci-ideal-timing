@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.android.ideatapp.R;
@@ -19,6 +20,7 @@ public class QueueItemsAdapter extends RecyclerView.Adapter<QueueItemsAdapter.My
     public QueueItemsAdapter(List<ItemModel> modelsList) {
         this.modelsList = modelsList;
     }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -30,7 +32,14 @@ public class QueueItemsAdapter extends RecyclerView.Adapter<QueueItemsAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         ItemModel itemModel = modelsList.get(position);
         holder.title.setText(itemModel.getTitle());
-        holder.subtitle.setText(itemModel.getTime());
+        holder.subtitle.setText(itemModel.getDate() + " " + itemModel.getTime());
+        if (itemModel.getStatus().equals("SENT")){
+            holder.status.setImageResource(R.drawable.ic_done);
+        }
+        if (itemModel.getSource().equals("EMAIL")){
+            holder.source.setImageResource(R.drawable.ic_email);
+            holder.source.setBackgroundResource(android.R.color.white);
+        }
     }
 
     @Override
@@ -38,7 +47,14 @@ public class QueueItemsAdapter extends RecyclerView.Adapter<QueueItemsAdapter.My
         return modelsList.size();
     }
 
+    public void setModelsList(List<ItemModel> data) {
+        this.modelsList = data;
+        notifyDataSetChanged();
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder{
+        public ImageView status;
+        public ImageView source;
         public TextView title;
         public TextView subtitle;
 
@@ -46,6 +62,8 @@ public class QueueItemsAdapter extends RecyclerView.Adapter<QueueItemsAdapter.My
             super(itemView);
             title = itemView.findViewById(R.id.title);
             subtitle = itemView.findViewById(R.id.subtitle);
+            status = itemView.findViewById(R.id.status);
+            source = itemView.findViewById(R.id.source);
         }
     }
 }

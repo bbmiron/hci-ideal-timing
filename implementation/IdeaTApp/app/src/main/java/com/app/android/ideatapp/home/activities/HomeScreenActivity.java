@@ -61,6 +61,7 @@ public class HomeScreenActivity extends AppCompatActivity {
         historyFragment = new HistoryFragment();
         adapter = new TabsAdapter(getSupportFragmentManager());
         adapter.addFragment(homeFragment, "Home");
+        adapter.addFragment(historyFragment, "History");
         viewPager.setAdapter(adapter);
     }
 
@@ -72,13 +73,6 @@ public class HomeScreenActivity extends AppCompatActivity {
             case HomeFragment.WRITE_POST_REQ_CODE:
             case HomeFragment.UPLOAD_PHOTO_REQ_CODE:
                 if (resultCode == RESULT_OK) {
-                    ItemModel model = (ItemModel) data.getExtras().getParcelable(SendEmailActivity.MODEL);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(TITLE, model.getTitle());
-                    bundle.putString(DATE, model.getDate());
-                    historyFragment.setArguments(bundle);
-                    adapter.addFragment(historyFragment, "History");
-                    viewPager.setAdapter(adapter);
                     viewPager.arrowScroll(View.FOCUS_RIGHT);
                 }
                 break;

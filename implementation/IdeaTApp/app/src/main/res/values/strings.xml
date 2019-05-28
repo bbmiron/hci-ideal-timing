@@ -12,8 +12,8 @@
     <string name="edit_time">Edit time</string>
     <string name="schedule_button">Schedule</string>
     <string name="recommended_title">Recommended Date and Time</string>
-    <string name="recommended_subtitle">Accordingly your google calendar, the recommended time for sending this email is:\n</string>
-    <string name="footer">You can schedule the email or edit the date and time</string>
-    <string name="recommended_subtitle_for_facebook">The recommended time for posting a job because:\n100 active users at 9:00\n 143 active users now</string>
-    <string name="recommended_subtitle_for_upload">The recommended time for uploading a photo because:\n100 active users at 9:00\n 143 active users now</string>
+    <string name="recommended_subtitle">Taking into account your google calendar, the recommended time for sending this email is:\n</string>
+    <string name="footer">You can schedule the action or edit the date and time</string>
+    <string name="recommended_subtitle_for_facebook">Yesterday: 300 active users at our recommended time, while now there are only 100.</string>
+    <string name="recommended_subtitle_for_upload">Yesterday: 250 active users at our recommended time, while now there are only 150.</string>
 </resources>

@@ -6,15 +6,13 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.android.ideatapp.helpers.DatabaseManager;
 import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
 import com.app.android.ideatapp.home.models.ItemModel;
 import com.facebook.CallbackManager;
@@ -28,7 +26,6 @@ import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 import com.squareup.picasso.Picasso;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,6 +65,8 @@ public class WritePostActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RecommendedTimeScreen.class);
         Bundle bundle = new Bundle();
         bundle.putInt(FOR_FB, 0);
+        bundle.putString(SendEmailActivity.DATE, "30-05-2019");
+        bundle.putString(SendEmailActivity.TIME, "13:07");
         intent.putExtras(bundle);
         startActivityForResult(intent,OPEN_RECOMMENDED_SCREN_REQ_CODE);
     }
@@ -109,10 +108,9 @@ public class WritePostActivity extends AppCompatActivity {
         if (requestCode == OPEN_RECOMMENDED_SCREN_REQ_CODE && resultCode == RESULT_OK) {
             String date = data.getStringExtra(RecommendedTimeScreen.DATE);
             String time = data.getStringExtra(RecommendedTimeScreen.TIME);
-            model = new ItemModel(sendMessage.getText().toString(), sendMessage.getText().toString(), date, time);
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra(WritePostActivity.MODEL, model);
-            setResult(RESULT_OK, resultIntent);
+            model = new ItemModel(sendMessage.getText().toString(), date, time, "FACEBOOK");
+            model.setId(DatabaseManager.getInstance(this).addNewTask(model));
+            setResult(RESULT_OK, new Intent());
             this.finish();
         }
 //        callbackManager.onActivityResult(requestCode, resultCode, data);
