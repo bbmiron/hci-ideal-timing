@@ -1,0 +1,40 @@
+.pictures {
+	height: 50%;
+	width: 50%;
+}
+
+.personas {
+	height: 120%;
+	width: 120%;
+}
+
+.screenshots {
+	height: 30%;
+	width: 80%;
+}
+
+video {
+	height: 30%;
+	width: 30%;
+}
+
+table {
+  font-family: roboto, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  text-align: center;
+  padding: 8px;
+}
+
+th {
+  text-align: center;
+  padding: 8px;
+  width: 30%;
+}
+
+#selected {
+  color: #2196F3;
+}

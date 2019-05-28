@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>IdeaT User Guide - Scholarly HTML</title>
+    <link rel="stylesheet" href="css/scholarly.min.css">
+    <link rel="stylesheet" href="css/local.css">
+    <script src="js/refs.js"></script>
+    <script src="js/test.min.js"></script>
+  </head>
+  <body prefix="schema: http://schema.org">
+    <header>
+      <div class="banner">
+        <img src="scholarly-html.svg" width="227" height="50" alt="Scholarly HTML logo">
+        <div class="status">Community Draft</div>
+      </div>
+      <h1>IdeaT User Guide</h1>
+    </header>
+    <div role="contentinfo">
+      <dl>
+        <dt>Authors</dt>
+        <dd>
+          Bianca Miron,
+          Diana Elena Gusa,
+          Madalina Andreea Iacob
+        </dd>
+        <dt>License</dt>
+        <dd>
+          <a href="http://creativecommons.org/licenses/by/4.0/">CC-BY</a>
+        </dd>
+      </dl>
+    </div>
+    <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
+      <h2>Abstract</h2>
+      <p>
+        The current document was built as a guide for the users of Ideal Timing application, which is intended for the Human-Computer Interaction university subject. In this document we will present what is the purpose of the application and how an user can schedule his time with it.
+      </p>
+    </section>
+    <section id="introduction" role="doc-introduction">
+      <h2>Introduction</h2>
+      <p>Develop a multi-device adaptive and customizable tool – i.e. a (mobile) Web browser extension – able to determine (e.g., learn) and recommend the ideal weekday and time for performing a set of desired actions in a specific context. For example, sending an important e-mail message to the co-workers, updating a Web site in order to increase the number of possible visitors and/or customers, committing the source-code only if a given module was not updated in the last W weeks, etc.</p>
+
+      <p>Based on the description above, we chose to build a mobile application which recommends this ideal time for some specific scenarios. These scenarios were found to be more occurent in our every day life and our scope is to help people in need in an efficient and simple manner.</p>
+    </section>
+    <section id="screens">
+      <h2>Screen-captures</h2>
+		This application will help the users to schedule their time. An user has to login with Google or Facebook account. He/She can choose from three option: to write a post on Facebook, to upload a photo on Facebook or to send an e-mail using Google account. Depending on the option choosen by him/her, he/she will need to compose the appropriate content. For each option, the application offers a nice, common, easy-to-use interface. To schedule an action like sending an e-mail, the application will be synchronized with Google Calendar. Thus, depending on the events already scheduled in the calendar, a recommended date and time will be displayed, so that the application will perform the action desired by user when he/she is busy and cannot do it by him/herself. The status of the action can be checked in the History screen. The following screen-captures reprezent the UI of the application and they explain the storyboards.
+		<section id="storyboards">
+		<h3>Storyboards</h3>
+			<p>An user can use IdeaT app to schedule sending an email. He/She has to login with Google account (1) and choose the third option from UI: "Send an e-mail" button (2). In this way, if the user will have a full day tomorrow, he/she can write the e-mail and it will be sent at the scheduled time (3), (4). The application is synchronized with Google Calendar. So, if Maria (our user from the storyboard below) works as human resources and she will have meetings or interviews in Calendar and she will not have access to the e-mail, this app will help her to be efficient. The application will suggest the best time after her Calendar is checked (5) and she can verify the status of the action in history screen (6).  </p>
+		
+			<table border="0">
+			<tr>
+				<th><img class="screenshots" src="screenshot1.png"></th>
+				<th><img class="screenshots" src="screenshot2.png"></th>
+				<th><img class="screenshots" src="screenshot3.png"></th>
+			</tr>
+			<tr>
+				<th>(1)</th>
+				<th>(2)</th>
+				<th>(3)</th>
+			</tr>
+			<tr>
+				<th><img class="screenshots" src="screenshot4.png"></th>
+				<th><img class="screenshots" src="screenshot5.png"></th>
+				<th><img class="screenshots" src="screenshot6.png"></th>
+			</tr>
+			<tr>
+				<th>(4)</th>
+				<th>(5)</th>
+				<th>(6)</th>
+			</tr>
+			</table>
+			<img class="personas" src="storyboard2.png">
+		
+			<p>An user can use IdeaT app to schedule uploading a photo on Facebook. The user has to login with Facebook account (1) and choose second option from UI: "Upload a photo" button (2). In the next screen he/she can view some information from his/her own Facebook profile and he/she can select a photo from galerie (3). Then the recommended date and time will be displayed (4). The user can change the date or the time using DateTime Pickers (5), (6). After the date and time are set, the user must press the button Schedule and the photo will be uploaded at the desired date. The user can check the status in the History screen (7), or directly on Facebook.
+			<table border="0">
+			<tr>
+				<th><img class="screenshots" src="screenshot1.png"></th>
+				<th><img class="screenshots" src="screenshot2.png"></th>
+				<th><img class="screenshots" src="screenshot3.png"></th>
+			</tr>
+			<tr>
+				<th>(1)</th>
+				<th>(2)</th>
+				<th>(3)</th>
+			</tr>
+			<tr>
+				<th><img class="screenshots" src="screenshot7.png"></th>
+				<th><img class="screenshots" src="screenshot8.png"></th>
+				<th><img class="screenshots" src="screenshot9.png"></th>
+			</tr>
+			<tr>
+				<th>(4)</th>
+				<th>(5)</th>
+				<th>(6)</th>
+			</tr>
+			</table>
+			<img class="personas" src="storyboard3.png">
+		</section>
+	</section>
+    <section id="video">
+      <h2>Video Demonstration</h2>
+		<video style="display:block; margin: 0 auto;" controls>
+		  <source src="video.mp4" type="video/mp4">
+		</video>
+    </section>
+  </body>
+</html>
