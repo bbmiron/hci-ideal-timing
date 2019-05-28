@@ -36,7 +36,6 @@ public class RecommendedTimeScreen extends AppCompatActivity {
     public static final int JOB_ID = 100;
     public static final String DATE = "date";
     public static final String TIME = "time";
-    public static final String ID = "id";
     private static final String DATE_FORMAT = "dd-MM-yyyy";
     private static final String TIME_FORMAT = "HH:mm";
     private TextView recommendedDate;
@@ -52,7 +51,6 @@ public class RecommendedTimeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recommended_screen_activity);
         init();
-        //getRecommendedDateTime();
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
@@ -94,7 +92,6 @@ public class RecommendedTimeScreen extends AppCompatActivity {
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra(DATE, recommendedDate.getText());
                 resultIntent.putExtra(TIME, recommendedTime.getText());
-                resultIntent.putExtra(ID, getIntent().getLongExtra(ID, 0L));
                 setResult(RESULT_OK, resultIntent);
                 finish();
             }
@@ -188,8 +185,8 @@ public class RecommendedTimeScreen extends AppCompatActivity {
         scheduleButton = findViewById(R.id.ok_button);
         recommendedSubtitle = findViewById(R.id.recommended_subtitle);
 
-        recommendedDate.setText(getIntent().getStringExtra(DATE));
-        recommendedTime.setText(getIntent().getStringExtra(TIME));
+        recommendedDate.setText(getIntent().getExtras().getString(DATE));
+        recommendedTime.setText(getIntent().getExtras().getString(TIME));
 
     }
 }

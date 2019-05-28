@@ -58,7 +58,7 @@ public class HistoryFragment extends Fragment {
             }
         };
         if (getActivity() != null) {
-            LocalBroadcastManager.getInstance(getActivity()).registerReceiver(updateUIReceiver, filter);
+            LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(updateUIReceiver, filter);
         }
     }
 

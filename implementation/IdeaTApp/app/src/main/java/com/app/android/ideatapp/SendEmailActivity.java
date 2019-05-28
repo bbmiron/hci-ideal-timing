@@ -3,6 +3,7 @@ package com.app.android.ideatapp;
 import android.Manifest;
 import android.accounts.AccountManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.job.JobScheduler;
 import android.content.Context;
@@ -18,6 +19,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +31,9 @@ import android.widget.EditText;
 import com.app.android.ideatapp.helpers.DatabaseManager;
 import com.app.android.ideatapp.helpers.InternetDetector;
 import com.app.android.ideatapp.helpers.Utils;
+import com.app.android.ideatapp.home.activities.HomeScreenActivity;
 import com.app.android.ideatapp.home.activities.RecommendedTimeScreen;
+import com.app.android.ideatapp.home.fragments.HomeFragment;
 import com.app.android.ideatapp.home.models.ItemModel;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -152,11 +158,10 @@ public class SendEmailActivity extends AppCompatActivity {
         Intent intentSchedule = new Intent(this, RecommendedTimeScreen.class);
         model = new ItemModel(edtSubject.getText().toString(), "EMAIL");
         model.setId(DatabaseManager.getInstance(this).addNewTask(model));
-        intentSchedule.putExtra(DATE,busyDate);
-        intentSchedule.putExtra(TIME,busyTime);
-        intentSchedule.putExtra(ID,model.getId());
         Bundle bundle = new Bundle();
         bundle.putInt(FOR_FB, 2);
+        bundle.putString(DATE,busyDate);
+        bundle.putString(TIME,busyTime);
         intentSchedule.putExtras(bundle);
         startActivityForResult(intentSchedule, REC_REQ_CODE);
     }
@@ -469,7 +474,36 @@ public class SendEmailActivity extends AppCompatActivity {
             } else {
                 showMessage(view, output);
                 cancelJob();
+                DatabaseManager.getInstance(getApplicationContext()).updateTaskStatus(model.getId(), "SENT");
+                sendNotification();
+                sendIntent();
             }
+        }
+
+        private void sendNotification() {
+            Intent intent = new Intent(getApplicationContext(), HomeScreenActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),
+                    HomeFragment.SEND_EMAIL_REQ_CODE, intent, 0);
+
+            NotificationCompat.Builder builder =
+                    new NotificationCompat.Builder(getApplicationContext(), MainActivity.CHANNEL_ID)
+                            .setSmallIcon(R.drawable.logo)
+                            .setContentTitle("Task completed")
+                            .setContentText("Your email has been sent!")
+                            .setPriority(NotificationCompat.PRIORITY_HIGH)
+                            .setContentIntent(pendingIntent);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+
+            // notificationId is a unique int for each notification that you must define
+            notificationManager.notify((int) model.getId(), builder.build());
+        }
+
+        private void sendIntent() {
+            Intent local = new Intent();
+            local.setAction("com.hello.action");
+            LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(local);
         }
 
         @Override

@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.app.android.ideatapp.WritePostActivity.FOR_FB;
 import static com.app.android.ideatapp.WritePostActivity.OPEN_RECOMMENDED_SCREN_REQ_CODE;
 
 public class UploadPhotoActivity extends AppCompatActivity {
@@ -168,6 +169,8 @@ public class UploadPhotoActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RecommendedTimeScreen.class);
         Bundle bundle = new Bundle();
         bundle.putInt(FOR_FB, 1);
+        bundle.putString(SendEmailActivity.DATE, "30-05-2019");
+        bundle.putString(SendEmailActivity.TIME, "13:07");
         intent.putExtras(bundle);
         startActivityForResult(intent,OPEN_RECOMMENDED_SCREN_REQ_CODE);
     }
