@@ -54,6 +54,8 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
     implementation 'com.google.android.gms:play-services-identity:7.3.0'
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+
 
     implementation files('libs/mail.jar')
     implementation files('libs/activation.jar')
