@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.app.android.ideatapp.helpers.DatabaseManager;
 import com.app.android.ideatapp.helpers.InternetDetector;
@@ -95,7 +96,7 @@ public class SendEmailActivity extends AppCompatActivity {
     private EditText from;
     EditText edtToAddress, edtSubject, edtMessage, edtAttachmentData;
     private FloatingActionButton sendFabButton;
-    private Button browse;
+    private ImageButton browse;
     private String email;
     private ItemModel model;
     private View viewSend;

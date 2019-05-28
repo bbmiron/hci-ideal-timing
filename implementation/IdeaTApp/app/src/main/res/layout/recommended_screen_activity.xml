@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/recommended_title"
+        android:contentDescription="recommended title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/big_margin"
@@ -24,6 +25,7 @@
         android:layout_height="98dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_date_range_black_24dp"
+        android:contentDescription="logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recommended_title" />
@@ -40,12 +42,14 @@
         app:layout_constraintTop_toBottomOf="@id/calendar_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="info"
         android:text="@string/recommended_subtitle"/>
 
     <TextView
         android:id="@+id/recommended_date"
         android:layout_width="126dp"
         android:layout_height="wrap_content"
+        android:contentDescription="date"
         android:layout_margin="@dimen/normal_margin"
         android:textSize="@dimen/text_18sp"
         app:layout_constraintEnd_toStartOf="@+id/edit_date"
@@ -59,6 +63,7 @@
         android:layout_width="@dimen/buttons_width"
         android:layout_height="@dimen/buttons_width"
         android:layout_margin="@dimen/normal_margin"
+        android:contentDescription="edit date"
         android:background="@drawable/ic_edit_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -70,6 +75,7 @@
         android:layout_width="126dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/normal_margin"
+        android:contentDescription="time"
         android:textSize="@dimen/text_18sp"
         app:layout_constraintEnd_toStartOf="@+id/edit_time"
         app:layout_constraintHorizontal_bias="0.5"
@@ -82,6 +88,7 @@
         android:layout_width="@dimen/buttons_width"
         android:layout_height="@dimen/buttons_width"
         android:layout_margin="@dimen/normal_margin"
+        android:contentDescription="edit time"
         android:background="@drawable/ic_edit_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -97,6 +104,7 @@
         app:layout_constraintTop_toBottomOf="@id/recommended_time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="foote info"
         android:layout_marginTop="@dimen/big_margin"
         android:textSize="@dimen/text_18sp"
         android:gravity="center"
@@ -108,6 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/big_margin"
         android:background="@drawable/draw_gray_button"
+        android:contentDescription="schedule button"
         android:text="@string/schedule_button"
         app:layout_constraintTop_toBottomOf="@id/footer"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/normal_margin"
             android:background="@drawable/draw_gray_button"
+            android:contentDescription="write a post"
             android:padding="@dimen/normal_margin"
             android:text="@string/write_post_button"
             android:textSize="@dimen/text_18sp" />
@@ -31,12 +32,14 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/normal_margin"
             android:background="@drawable/draw_gray_button"
+            android:contentDescription="upload photo"
             android:padding="@dimen/normal_margin"
             android:text="@string/upload_photo_button"
             android:textSize="@dimen/text_18sp" />
 
         <Button
             android:id="@+id/send_email_button"
+            android:contentDescription="send email"
             android:layout_width="@dimen/button_width"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/normal_margin"

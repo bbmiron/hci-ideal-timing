@@ -69,6 +69,16 @@
         app:layout_constraintTop_toBottomOf="@+id/divider2"
         tools:layout_editor_absoluteY="104dp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Attachment"
+        android:labelFor="@id/attachmentData"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toTopOf="@id/attachmentData"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/attachment"
+        app:layout_constraintStart_toStartOf="parent"/>
     <EditText
         android:id="@+id/attachmentData"
         android:layout_width="0dp"
@@ -91,6 +101,7 @@
         android:layout_margin="@dimen/normal_margin"
         android:src="@android:drawable/ic_menu_send"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="send button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/attachmentData" />

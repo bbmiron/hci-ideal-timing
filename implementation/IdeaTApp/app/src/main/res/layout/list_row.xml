@@ -27,6 +27,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/source"
         android:layout_toLeftOf="@+id/status"
+        android:contentDescription="title"
         android:textSize="@dimen/text_18sp"
         android:textStyle="bold"
         android:text="Junior Android Dev"/>
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/source"
         android:layout_toLeftOf="@+id/status"
+        android:contentDescription="title"
         android:layout_below="@id/title"
         android:text="Time"/>
 

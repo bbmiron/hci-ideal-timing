@@ -43,6 +43,7 @@
         android:textSize="@dimen/text_18sp"
         app:layout_constraintStart_toEndOf="@+id/profile_image"
         app:layout_constraintTop_toBottomOf="@id/divider"
+        android:contentDescription="profile name"
         tools:text="MADALINA" />
 
     <View
@@ -55,6 +56,16 @@
         app:layout_constraintTop_toBottomOf="@id/profile_image"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="135dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/small_margin"
+        android:text="Message"
+        android:labelFor="@id/send_messange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"/>
 
     <EditText
         android:id="@+id/send_messange"
@@ -72,6 +83,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/normal_margin"
+        android:contentDescription="send button"
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@android:drawable/ic_menu_send"
         app:layout_constraintEnd_toEndOf="parent"/>
