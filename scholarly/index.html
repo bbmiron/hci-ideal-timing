@@ -277,7 +277,10 @@
           <p>The second platform we chose that is widely used is <strong>Facebook</strong>, where a post can be shared with friends or a picture can be uploaded. The Facebook API is quite limitated for the safety and confidentiality of their users so sadly the developers do not have much to choose from their features. </p>
 
           <img class="wireframes" src="screenshot1.png">
+          <br />
           <img class="wireframes" src="screenshot3.png">
+          <img class="wireframes" src="screenshot11.png">
+          <img class="wireframes" src="screenshot12.png">
           
         </section>
 
@@ -297,12 +300,16 @@
           <p>For the Facebook part, we wanted to have some statistics along a couple of days to determine the day of the week and time of the day when there are most users active. The next step is to have the closest period with regards to the current time the user is composing the post message or choosing the picture to share and have this recommended to him/her, but also present the other times when there are more users, but he/she will have to wait a bit more for that. Therefore, the choice can still be the user's which would fit him/her best.</p>
 
           <img class="wireframes" src="screenshot5.png">
+          <img class="wireframes" src="screenshot13.png">
         </section>
 
         <section id="database">
           <h2>Database</h2>
           
           <p>It is important for our user to remember their past actions and also see the current status of the tasks that were scheduled in a simple way. Furthermore, we needed to store the timestamps and the content to have them at hand when it was time to send them. So we used a <strong>SQLite</strong> database where we stored an Item Model, with the message, pictures, source, time to schedule, recipients and status. We have a list of items in the History Tab from the main screen with the most important details and also descriptive images for the source (logo of the platforms) and the status (PENDING is represented by an hourglass, while SENT displays two checkmarks).</p>
+
+
+          <img class="wireframes" src="screenshot18.png">
         </section>
 
         <section id="notifications">
@@ -311,6 +318,10 @@
           <p>The interaction between the user and the application is most important, so we need to guide the user into learning the ways of IdeaT. We have dialogs which are displayed when he/she wants to do an action without being logged in with that platform and also a button which automatically switches to the Login screen. There are also error messages appearing as a Snackbar native component when some fields are left blank or the validations do not pass.</p>
 
           <p>We also value real-time changes and we show that through local broadcasting of notifications so the History list will be updated automatically when the action is done. Furthermore, a system notification appears in the toolbar of the phone when the Scheduler decides it's time to complete the task. For devices with an operating system newer or equal to Android Oreo, we also have Notification Channels so the user can have complete control whether to have these alerts displayed or they do not want to be disturbed.</p>
+
+          <img class="wireframes" src="screenshot10.png">
+          <img class="wireframes" src="screenshot15.png">
+          <img class="wireframes" src="screenshot17.png">
         </section>
         
       </section>
