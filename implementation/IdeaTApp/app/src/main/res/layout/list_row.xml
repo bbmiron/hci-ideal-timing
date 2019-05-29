@@ -26,6 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/source"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:layout_toLeftOf="@+id/status"
         android:contentDescription="title"
         android:textSize="@dimen/text_18sp"

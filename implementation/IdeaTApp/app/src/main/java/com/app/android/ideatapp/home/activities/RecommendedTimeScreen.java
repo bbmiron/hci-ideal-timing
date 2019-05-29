@@ -86,7 +86,7 @@ public class RecommendedTimeScreen extends AppCompatActivity {
         scheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (activityOpened != 0 || activityOpened != 1) {
+                if (activityOpened == 2 ) {
                     scheduleJob();
                 }
                 Intent resultIntent = new Intent();
