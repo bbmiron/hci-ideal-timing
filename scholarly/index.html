@@ -263,5 +263,56 @@
       </section>
 
     </section>
+
+    <section id="solution">
+        <h2>Solution</h2>
+
+        <section id="login">
+          <h2>Login</h2>
+
+          <p>In order to be able to post the actions to the corresponding platforms and to have a simple and fast process, we needed to add authentication for some of the most used platforms. In the first screen of the mobile application, the user can select which of these he/she would like to use. </p>
+
+          <p>The first one is with <strong>Gmail</strong>, which uses the Google API for sending e-mails. The user can select which account to use, and in a fast and secure way, be redirected to the select an option step to choose "Send an e-mail". Here the Sender field is auto-completed and the next step would be to add Recipients, a Title, a Message and also Attachments such as pictures if needed.</p>
+
+          <p>The second platform we chose that is widely used is <strong>Facebook</strong>, where a post can be shared with friends or a picture can be uploaded. The Facebook API is quite limitated for the safety and confidentiality of their users so sadly the developers do not have much to choose from their features. </p>
+
+          <img class="wireframes" src="screenshot1.png">
+          <img class="wireframes" src="screenshot3.png">
+          
+        </section>
+
+        <section id="scheduling">
+          <h2>Scheduling</h2>
+          
+          <p>The scheduling part was implemented using a native JobService from Android, which takes into consideration the items found in the database and <strong>checks every 20 seconds</strong> whether any of the actions are scheduled for the current date and time. This runs in the background and does not take a lot of memory, but needs internet connection. Furthermore, the APIs from Google and Facebook are used to finish the action succesfully.</p>
+        </section>
+
+        <section id="recommendation">
+          <h2>Recommendation</h2>
+          
+          <p>For the Gmail part, we decided to have a recommendation based on user's <strong>Google Calendar</strong> after the user accepts to share their events with our application. We think that their time is very precious, so since HR people are very busy with interviews and meetings, we want to have them enjoy their breaks in between. So he/she can compose the message along with an attachment if needed and decide which candidates to have for this round of recruiting at the end of their working day. But here IdeaT comes into play and when their day is full with activities, we help make their process more efficient and send the e-mail when their calendar is busier. Taking into consideration the first events of the following day, we recommend the time of sending the e-mail, so when they come back at the end of the day, have a lot of received responses to work with. </p>
+
+          <p>For the future, after we have gathered some data about the time most responses are received, we would like to recommend a better time for the job e-mail so the recruiter catches those users already online in their e-mail application.</p>
+
+          <p>For the Facebook part, we wanted to have some statistics along a couple of days to determine the day of the week and time of the day when there are most users active. The next step is to have the closest period with regards to the current time the user is composing the post message or choosing the picture to share and have this recommended to him/her, but also present the other times when there are more users, but he/she will have to wait a bit more for that. Therefore, the choice can still be the user's which would fit him/her best.</p>
+
+          <img class="wireframes" src="screenshot5.png">
+        </section>
+
+        <section id="database">
+          <h2>Database</h2>
+          
+          <p>It is important for our user to remember their past actions and also see the current status of the tasks that were scheduled in a simple way. Furthermore, we needed to store the timestamps and the content to have them at hand when it was time to send them. So we used a <strong>SQLite</strong> database where we stored an Item Model, with the message, pictures, source, time to schedule, recipients and status. We have a list of items in the History Tab from the main screen with the most important details and also descriptive images for the source (logo of the platforms) and the status (PENDING is represented by an hourglass, while SENT displays two checkmarks).</p>
+        </section>
+
+        <section id="notifications">
+          <h2>User notifications</h2>
+          
+          <p>The interaction between the user and the application is most important, so we need to guide the user into learning the ways of IdeaT. We have dialogs which are displayed when he/she wants to do an action without being logged in with that platform and also a button which automatically switches to the Login screen. There are also error messages appearing as a Snackbar native component when some fields are left blank or the validations do not pass.</p>
+
+          <p>We also value real-time changes and we show that through local broadcasting of notifications so the History list will be updated automatically when the action is done. Furthermore, a system notification appears in the toolbar of the phone when the Scheduler decides it's time to complete the task. For devices with an operating system newer or equal to Android Oreo, we also have Notification Channels so the user can have complete control whether to have these alerts displayed or they do not want to be disturbed.</p>
+        </section>
+        
+      </section>
   </body>
 </html>
